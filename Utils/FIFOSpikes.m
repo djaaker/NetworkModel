@@ -9,7 +9,7 @@ classdef FIFOSpikes
     methods
         function obj = FIFOSpikes(numRows, maxCols)
             obj.capacity = maxCols;
-            obj.buffer = false(numRows, maxCols); % Preallocate with NaNs
+            obj.buffer = gpuArray(false(numRows, maxCols)); % Preallocate with NaNs
         end
         
         function obj = push(obj, colVector)
