@@ -21,7 +21,7 @@ classdef Network
             obj.grid_length = grid_length;
             obj.num_neurons =  grid_size*grid_size;
 
-            n_time = obj.total_time/obj.dt;
+            n_time = round(obj.total_time/obj.dt);
 
             obj.spikes = false(obj.num_neurons,n_time);
             obj.v_neurons = zeros(obj.num_neurons,n_time);
@@ -54,13 +54,10 @@ classdef Network
                     delays = (conn.*D)/vAP;
                     delays = reshape(delays,[],1);
                     conn = reshape(conn,[],1);
-                    connections_E = conn.*(~EI_tag)';
-                    connections_I = conn.*(EI_tag)';
-                    connection_delays_E = round(((delays+tau_syn).*connections_E)/(obj.dt));
-                    connection_delays_I = round(((delays+tau_syn).*connections_I)/(obj.dt));
-                    % synaptic_weights = rand(obj.num_neurons,1)*0.05;
-                    % synaptic_weights_E = synaptic_weights.*connections_E;
-                    % synaptic_weights_I = synaptic_weights.*connections_I;
+                    connections_E = find(conn.*(~EI_tag)' == 1);
+                    connections_I = find(conn.*(EI_tag)' == 1);
+                    connection_delays_E = round((tau_syn*ones(size(connections_E)) + delays(connections_E))/(obj.dt));
+                    connection_delays_I = round((tau_syn*ones(size(connections_I)) + delays(connections_I))/(obj.dt));
                     id = (i-1)*obj.grid_size+j;
                     obj.neurons(id) = Neuron(id,~EI_tag(id),connections_E,connections_I,i,j,connection_delays_E,connection_delays_I);
                 end
@@ -94,13 +91,49 @@ classdef Network
             plot(g,'XData',X,'YData',Y);
         end
 
-        function obj = update(obj,dt,time,I_ext)
+        function obj = update(obj,time_indx,time,I_ext,spike_ext)
+            % Getting spikes from all neurons
             for i=1:obj.num_neurons
-                time_indx = round(time/dt);
-                [obj.neurons(i), obj.spikes(i,time_indx)] = obj.neurons(i).update(obj.spikes,I_ext(i),obj.dt,time);
+                [obj.neurons(i), obj.spikes(i,time_indx)] = obj.neurons(i).update(I_ext(i),spike_ext(i),obj.dt,time);
                 obj.v_neurons(i,time_indx) = obj.neurons(i).V;
             end
+            % updating spikes in all neurons 
+            for i=1:obj.num_neurons
+                obj.neurons(i).update_spikes_buff(squeeze(obj.spikes(:,time_indx)));
+            end
         end
+
+        function obj = update_par(obj, time_indx, time, I_ext,spike_ext)
+            num_neurons_tmp = obj.num_neurons;  % Avoid repeated property access
+        
+            % Preallocate arrays for neuron properties
+            spikes_tmp = false(num_neurons_tmp, 1); 
+            v_tmp = zeros(num_neurons_tmp, 1);
+            
+            % Extract necessary properties to reduce handle object overhead
+            dt = obj.dt;
+            neuron_data = obj.neurons; % Store handle references (not used in `parfor` directly)
+        
+            % Parallelized neuron updates
+            parfor i = 1:num_neurons_tmp
+                neuron = neuron_data(i); % Copy handle object
+                [neuron, spikes_tmp(i)] = neuron.update(I_ext(i),spike_ext(i), dt, time);
+                v_tmp(i) = neuron.V; % Store new voltage
+                neuron_data(i) = neuron; % Store modified neuron
+            end
+        
+            % Assign back computed results
+            obj.spikes(:, time_indx) = spikes_tmp;
+            obj.v_neurons(:, time_indx) = v_tmp;
+            obj.neurons = neuron_data; % Assign updated neurons back
+        
+            % Serial update of spikes in all neurons
+            spikes_current = squeeze(obj.spikes(:, time_indx)); 
+            for i = 1:num_neurons_tmp
+                obj.neurons(i).update_spikes_buff(spikes_current);
+            end
+        end
+
     end
 end
 

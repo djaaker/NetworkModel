@@ -2,8 +2,8 @@ classdef Neuron
     properties
         id                          % the id of the neuron 1 <= id <= N where N is the total number of neurons
         is_excitatory               % True if excitatory, false if inhibitory
-        connections_E               % Connections to other E neurons 1 - if connected, 2 - not connected 
-        connections_I               % Connections to other I neurons 1 - if connected, 2 - not connected 
+        connections_E               % Connections to other E neurons  - id of the connected  
+        connections_I               % Connections to other I neurons - id of the connected  
         x_coord                     % x coordinate 
         y_coord                     % y coordinate 
         connection_delays_E         % Delays based on connection length for E neurons
@@ -28,6 +28,10 @@ classdef Neuron
 
         tau_syn_e = 5e-3;           % excitatory synpatic time constant
         tau_syn_i = 5e-3;           % inhibitory synpatic time constant
+
+        spikes_e_buff               % Buffer for containing all past spikes from excitatory connections 
+        spikes_i_buff               % Buffer for containing all past spikes from inhibitory connections
+
     end
     
     methods
@@ -45,22 +49,25 @@ classdef Neuron
             obj.V = obj.E_L;
             obj.ge = 0;
             obj.gi = 0;
+
+            max_e_delay = max(obj.connection_delays_E);
+            max_i_delay = max(obj.connection_delays_I);
+
+            obj.spikes_e_buff = FIFOSpikes(numel(connection_delays_E),max_e_delay);
+%             obj.spikes_e_buff.push_multiple(false(numel(connection_delays_E),max_e_delay));
+            obj.spikes_i_buff = FIFOSpikes(numel(connection_delays_I),max_i_delay);
+%             obj.spikes_i_buff.push_multiple(false(numel(connection_delays_I),max_i_delay));
         end
         
-        function [obj, spike] = update(obj,spikes,I_ext,dt,time)
-            time_indx = round(time/dt);
+        function [obj, spike] = update(obj,I_ext,spike_ext,dt,time)
             % For excitatory conductance
-            spikes_delay = circshiftSpikeDelay(spikes,obj.connection_delays_E');
-            try
-                delta_ge = sum(squeeze(spikes_delay(:,time_indx)))*obj.GE;
-            catch
-                warning('breakpoint');
-                end
+            spikes_delay = obj.spikes_e_buff.get_behind(obj.connection_delays_E+1);
+            delta_ge = (sum(spikes_delay,'all')+spike_ext)*obj.GE;
             obj.ge = obj.ge - obj.ge/obj.tau_syn_e + delta_ge;
 
             % For inhibitory conductance
-            spikes_delay = circshiftSpikeDelay(spikes,obj.connection_delays_I');
-            delta_gi = sum(squeeze(spikes_delay(:,time_indx)))*obj.GI;
+            spikes_delay = obj.spikes_i_buff.get_behind(obj.connection_delays_I+1);
+            delta_gi = sum(spikes_delay,'all')*obj.GI;
             obj.gi = obj.gi - obj.gi/obj.tau_syn_i + delta_gi;
 
             if (time - obj.last_spike_time) < obj.refractory_period
@@ -78,6 +85,12 @@ classdef Neuron
                 obj.last_spike_time = time;
             end
         end
+        
+        function obj = update_spikes_buff(obj,last_spikes)
+            obj.spikes_e_buff.push(last_spikes(obj.connections_E));
+            obj.spikes_i_buff.push(last_spikes(obj.connections_I));
+        end
+
     end
 end
 
