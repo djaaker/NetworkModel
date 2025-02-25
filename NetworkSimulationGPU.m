@@ -35,7 +35,7 @@ save_interval = total_iterations/20;
 
 rate = 20;                       % Firing rate in Hz
 duration = 1;    
-spike_train_ext = gpuArray(generate_poisson_spikes_N(parameters.num_neurons, rate, duration, dt));
+spike_train_ext = gpuArray(generate_poisson_spikes_N(parameters.num_neurons, rate, duration, parameters.dt));
 
 for i = 1:total_iterations
 
