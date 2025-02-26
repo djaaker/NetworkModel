@@ -1,9 +1,9 @@
 %% Network Paramters 
 %Number of neurons in one dimension 
-grid_size = 10;
+grid_size = 20;
 excitatory_ratio = 0.8;
 % Size of the patch of cortex to simulate 
-grid_length = 0.25e-3; % in m
+grid_length = 0.45e-3; % in m
 
 
 % Decay constant for connectivity 
@@ -39,8 +39,8 @@ start_time = tic; % Start timer
 save_interval = total_iterations/20;
 
 N = grid_size*grid_size;         % Number of neurons
-rate_baseline = 20;              % baseline firing rate
-rate_stimulation = 50;           % stimulation modulated firing rate
+rate_baseline = 10;              % baseline firing rate
+rate_stimulation = 30;           % stimulation modulated firing rate
 baseline_duration = 0.2;    
 dt = time_step; 
 spike_train_ext = [generate_poisson_spikes_N(N, rate_baseline, baseline_duration, dt) generate_poisson_spikes_N(N, rate_stimulation, total_time-baseline_duration, dt)];

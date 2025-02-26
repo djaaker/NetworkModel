@@ -1,4 +1,4 @@
-classdef Neuron
+classdef NeuronGPU
     properties
         id                          % the id of the neuron 1 <= id <= N where N is the total number of neurons
         is_excitatory               % True if excitatory, false if inhibitory
@@ -23,7 +23,7 @@ classdef Neuron
         gi                          % inhibitory conductance
 
         GL = 10e-9;                 % leak conductance
-        GE = 2e-9;                  % excitatory synaptic weight
+        GE = 5e-9;                  % excitatory synaptic weight
         GI = 10e-9;                 % inhibitory synaptic weight
 
         tau_syn_e = 5e-3;           % excitatory synpatic time constant
@@ -35,7 +35,7 @@ classdef Neuron
     end
     
     methods
-        function obj = Neuron(id,is_excitatory,connections_E,connections_I,x_coord,y_coord,connection_delays_E,connection_delays_I)
+        function obj = NeuronGPU(id,is_excitatory,connections_E,connections_I,x_coord,y_coord,connection_delays_E,connection_delays_I)
 
             obj.id = id;
             obj.is_excitatory = is_excitatory;
@@ -63,12 +63,12 @@ classdef Neuron
             % For excitatory conductance
             spikes_delay = obj.spikes_e_buff.get_behind(obj.connection_delays_E+1);
             delta_ge = (sum(spikes_delay,'all')+spike_ext)*obj.GE;
-            obj.ge = obj.ge - (dt*obj.ge)/obj.tau_syn_e + delta_ge;
+            obj.ge = obj.ge - obj.ge/obj.tau_syn_e + delta_ge;
 
             % For inhibitory conductance
             spikes_delay = obj.spikes_i_buff.get_behind(obj.connection_delays_I+1);
             delta_gi = sum(spikes_delay,'all')*obj.GI;
-            obj.gi = obj.gi - (dt*obj.gi)/obj.tau_syn_i + delta_gi;
+            obj.gi = obj.gi - obj.gi/obj.tau_syn_i + delta_gi;
 
             if (time - obj.last_spike_time) < obj.refractory_period
                 obj.V = obj.V_reset; % Refractory period
@@ -87,10 +87,9 @@ classdef Neuron
         end
         
         function obj = update_spikes_buff(obj,last_spikes)
-            obj.spikes_e_buff = obj.spikes_e_buff.push(last_spikes(obj.connections_E));
-            obj.spikes_i_buff = obj.spikes_i_buff.push(last_spikes(obj.connections_I));
+            obj.spikes_e_buff.push(last_spikes(obj.connections_E));
+            obj.spikes_i_buff.push(last_spikes(obj.connections_I));
         end
 
     end
 end
-
