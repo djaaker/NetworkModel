@@ -23,8 +23,8 @@ classdef Neuron
         gi                          % inhibitory conductance
 
         GL = 10e-9;                 % leak conductance
-        GE = 2e-9;                  % excitatory synaptic weight
-        GI = 10e-9;                 % inhibitory synaptic weight
+        GE = 5e-9;                  % excitatory synaptic weight
+        GI = 25e-9;                 % inhibitory synaptic weight
 
         tau_syn_e = 5e-3;           % excitatory synpatic time constant
         tau_syn_i = 5e-3;           % inhibitory synpatic time constant

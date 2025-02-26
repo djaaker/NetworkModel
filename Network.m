@@ -33,7 +33,7 @@ classdef Network
             % Number of E and I neurons
             N_E = round(excitatory_ratio*obj.num_neurons);
             N_I = obj.num_neurons-N_E;
-            spacing = obj.grid_length/obj.grid_size; % in mm
+            spacing = obj.grid_length/obj.grid_size; % in m
 
             % Distribute E and I neurons 
             EI_tag = [ones(1,N_I), zeros(1,N_E)];
@@ -50,7 +50,7 @@ classdef Network
                     [X,Y] = meshgrid( (1:obj.grid_size)-i, (1:obj.grid_size)-j);
                     D = sqrt( (X*spacing).^2 + (Y*spacing).^2 );
                     % getting connection probability distribution from the neuron
-                    conn_prob = exp(-D.^2/(2*sigma^2));
+                    conn_prob = exp((-D.^2)/(2*(sigma^2)));
                     % removing self connection
                     conn_prob(i,j) = 0;conn_prob(j,i) = 0;
                     random_matrix = rand(size(conn_prob));
@@ -121,7 +121,7 @@ classdef Network
             neuron_data = obj.neurons; % Store handle references (not used in `parfor` directly)
         
             % Parallelized neuron updates
-            parfor i = 1:num_neurons_tmp
+            for i = 1:num_neurons_tmp
                 neuron = neuron_data(i); % Copy handle object
                 [neuron, spikes_tmp(i)] = neuron.update(I_ext(i),spike_ext(i), dt, time);
                 v_tmp(i) = neuron.V; % Store new voltage

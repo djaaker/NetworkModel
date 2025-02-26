@@ -1,9 +1,9 @@
 %% Network Paramters 
 %Number of neurons in one dimension 
-grid_size = 20;
+grid_size = 100;
 excitatory_ratio = 0.8;
 % Size of the patch of cortex to simulate 
-grid_length = 0.45e-3; % in m
+grid_length = 0.55e-3; % in m
 
 
 % Decay constant for connectivity 
@@ -17,7 +17,7 @@ tau_syn = 300e-6; % in seconds
 % time step of simulation in s
 time_step = 0.1e-3;
 % Total time of simulation in s 
-total_time = 0.4;
+total_time = 0.2;
 
 %% Create spiling neural network SNN 
 SNN = Network(grid_size,grid_length,excitatory_ratio, sigma,vAP,tau_syn,time_step,total_time);
@@ -38,26 +38,20 @@ total_iterations = total_time / time_step;
 start_time = tic; % Start timer
 save_interval = total_iterations/20;
 
+%% Generating external input to the network
 N = grid_size*grid_size;         % Number of neurons
-rate_baseline = 10;              % baseline firing rate
-rate_stimulation = 30;           % stimulation modulated firing rate
-baseline_duration = 0.2;    
+rate_baseline = 20;              % baseline firing rate
+rate_stimulation = 50;           % stimulation modulated firing rate
+rate_baseline_post = 0; 
+baseline_duration = 0.1; 
+stim_duration = 0;
 dt = time_step; 
-spike_train_ext = [generate_poisson_spikes_N(N, rate_baseline, baseline_duration, dt) generate_poisson_spikes_N(N, rate_stimulation, total_time-baseline_duration, dt)];
+spike_train_ext = [generate_poisson_spikes_N(N, rate_baseline, baseline_duration, dt) generate_poisson_spikes_N(N, rate_stimulation, stim_duration, dt) generate_poisson_spikes_N(N, rate_baseline_post, total_time-baseline_duration-stim_duration, dt)];
+
+%% Simulating network
 
 for i = 1:total_iterations
-    % % Apply external current condition
-    % if i * time_step > 0.001 && i * time_step < 1
-    %     I_ext = 0.5e-9 * ones(SNN.num_neurons, 1);
-    % else
     I_ext = zeros(SNN.num_neurons, 1);
-    % end
-   
-%     if i <= size(spike_train_ext,2)
-%         spike_ext = (squeeze(spike_train_ext(:,i))).*(~SNN.EI_tag)';
-%     else
-%         spike_ext = false(N,1);
-%     end
 
     spike_ext = (squeeze(spike_train_ext(:,i))).*(~SNN.EI_tag)';
 
@@ -65,17 +59,12 @@ for i = 1:total_iterations
     SNN = SNN.update_par(i, i * time_step, I_ext,spike_ext);
     
     % Calculate elapsed time and estimate time remaining
-    elapsed_time = toc(start_time);
-    avg_time_per_iter = elapsed_time / i;
-    estimated_time_left = (avg_time_per_iter * (total_iterations - i))/3600;
+    elapsed_time = toc(start_time);avg_time_per_iter = elapsed_time / i;estimated_time_left = (avg_time_per_iter * (total_iterations - i))/3600;
     
     % Update waitbar with progress and estimated time left
-    waitbar(i / total_iterations, h, ...
-        sprintf('SNN Simulation Progress: %.2f%% | Time left: %.2f hrs', ...
-        (i / total_iterations) * 100, estimated_time_left));
+    waitbar(i / total_iterations, h,sprintf('SNN Simulation Progress: %.2f%% | Time left: %.2f hrs',(i / total_iterations) * 100, estimated_time_left));
     if (mod(i, save_interval) == 0 || i == total_iterations) && saveFlag == 1
-        save(sessionName,"-v7.3");
-        fprintf('Workspace saved at %d%% completion.\n', round((i / total_iterations) * 100));
+        save(sessionName,"-v7.3");fprintf('Workspace saved at %d%% completion.\n', round((i / total_iterations) * 100));
     end
 end
 
@@ -83,11 +72,15 @@ close(h); % Close waitbar when done
 
 %% Plotting
 
-figure;
-plot(SNN.v_neurons(3,:));hold on;
-plot(spike_train_ext(3,:));
-ylim([-1 1.5])
+plotSpikingNetwork(SNN)
 
+
+
+% figure;
+% plot(SNN.v_neurons(4,:));hold on;
+% plot(SNN.spikes(3,:));
+% ylim([-1 1.5])
+% 
 figure();
 subplot(4,1,1)
 imagesc(SNN.v_neurons);
@@ -99,12 +92,26 @@ subplot(4,1,4)
 imagesc(SNN.spikes);
 colormap(flipud(gray))
 
-%% 
-figure();
-imagesc(SNN.spikes);
-colormap(flipud(gray))
-
-
+% %% 
+% figure();
+% imagesc(SNN.spikes);
+% colormap(flipud(gray))
+% 
+% 
 figure();
 imagesc(spike_train_ext);
 colormap(flipud(gray))
+
+abc = 9;
+figure();
+plot(SNN.ge_neurons(abc,:));
+hold on;
+plot(SNN.gi_neurons(abc,:));
+yyaxis right;
+plot(spike_train_ext(abc,:));
+
+figure();
+plot(SNN.v_neurons(abc,:));
+hold on;
+yyaxis right;
+plot(SNN.spikes(abc,:));
