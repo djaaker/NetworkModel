@@ -62,14 +62,13 @@ classdef Neuron
         function [obj, spike] = update(obj,I_ext,spike_ext,dt,time)
             % For excitatory conductance
             spikes_delay = obj.spikes_e_buff.get_behind(obj.connection_delays_E+1);
-            
             delta_ge = (sum(spikes_delay,'all')+spike_ext)*obj.GE;
-            obj.ge = obj.ge - obj.ge/obj.tau_syn_e + delta_ge;
+            obj.ge = obj.ge - (dt*obj.ge)/obj.tau_syn_e + delta_ge;
 
             % For inhibitory conductance
             spikes_delay = obj.spikes_i_buff.get_behind(obj.connection_delays_I+1);
             delta_gi = sum(spikes_delay,'all')*obj.GI;
-            obj.gi = obj.gi - obj.gi/obj.tau_syn_i + delta_gi;
+            obj.gi = obj.gi - (dt*obj.gi)/obj.tau_syn_i + delta_gi;
 
             if (time - obj.last_spike_time) < obj.refractory_period
                 obj.V = obj.V_reset; % Refractory period
