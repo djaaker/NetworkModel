@@ -3,8 +3,8 @@ function [SNN,spikes,v_neurons,parameters] = generateNetwork(parameters)
 parameters.num_neurons = parameters.grid_size^2;
 parameters.n_time = round(parameters.total_time/parameters.dt);
 
-spikes = gpuArray(false(parameters.num_neurons,parameters.n_time));
-v_neurons = gpuArray(zeros(parameters.num_neurons,parameters.n_time));
+spikes = false(parameters.num_neurons,parameters.n_time);
+v_neurons = zeros(parameters.num_neurons,parameters.n_time);
 
 % Number of E and I neurons
 parameters.N_E = round(parameters.excitatory_ratio*parameters.num_neurons);
@@ -49,4 +49,3 @@ clear X Y D conn conn_prob delays random_matrix
 close (f);
 
 end
-

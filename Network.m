@@ -6,7 +6,9 @@ classdef Network
         neurons                 % Array of all neurons in the network
         dt                      % Time step of the simulation
         spikes                  % matrix storing all the spikes
-        v_neurons               % matrix 
+        v_neurons               % matrix storing all the v of neurons
+        ge_neurons              % matrix storing all the ge of neurons
+        gi_neurons              % matrix storing all the gi of neurons
         total_time              % total time of the simulation
         EI_tag                  % EI tag of all neurons
     end
@@ -25,6 +27,8 @@ classdef Network
 
             obj.spikes = false(obj.num_neurons,n_time);
             obj.v_neurons = zeros(obj.num_neurons,n_time);
+            obj.ge_neurons = zeros(obj.num_neurons,n_time);
+            obj.gi_neurons = zeros(obj.num_neurons,n_time);
 
             % Number of E and I neurons
             N_E = round(excitatory_ratio*obj.num_neurons);
@@ -109,6 +113,8 @@ classdef Network
             % Preallocate arrays for neuron properties
             spikes_tmp = false(num_neurons_tmp, 1); 
             v_tmp = zeros(num_neurons_tmp, 1);
+            ge_tmp = zeros(num_neurons_tmp, 1);
+            gi_tmp = zeros(num_neurons_tmp, 1);
             
             % Extract necessary properties to reduce handle object overhead
             dt = obj.dt;
@@ -119,18 +125,22 @@ classdef Network
                 neuron = neuron_data(i); % Copy handle object
                 [neuron, spikes_tmp(i)] = neuron.update(I_ext(i),spike_ext(i), dt, time);
                 v_tmp(i) = neuron.V; % Store new voltage
+                ge_tmp(i) = neuron.ge; % Store new ge
+                gi_tmp(i) = neuron.gi; % Store new gi
                 neuron_data(i) = neuron; % Store modified neuron
             end
         
             % Assign back computed results
             obj.spikes(:, time_indx) = spikes_tmp;
             obj.v_neurons(:, time_indx) = v_tmp;
+            obj.ge_neurons(:, time_indx) = ge_tmp;
+            obj.gi_neurons(:, time_indx) = gi_tmp;
             obj.neurons = neuron_data; % Assign updated neurons back
         
             % Serial update of spikes in all neurons
             spikes_current = squeeze(obj.spikes(:, time_indx)); 
             for i = 1:num_neurons_tmp
-                obj.neurons(i).update_spikes_buff(spikes_current);
+                obj.neurons(i) = obj.neurons(i).update_spikes_buff(spikes_current);
             end
         end
 

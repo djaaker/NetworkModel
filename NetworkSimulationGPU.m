@@ -1,6 +1,6 @@
 %% Network Paramters 
 %Number of neurons in one dimension 
-parameters.grid_size = 50;
+parameters.grid_size = 10;
 parameters.excitatory_ratio = 0.8;
 % Size of the patch of cortex to simulate 
 parameters.grid_length = 1e-3; % in m
@@ -24,8 +24,11 @@ parameters.total_time = 2;
 
 
 %% Saving session
-savepath = uigetdir(path);
-sessionName = [savepath,'/','SNNStimulation50x50PoissonInput.mat'];
+saveFlag = 0;
+if saveFlag == 1
+    savepath = uigetdir(path);
+    sessionName = [savepath,'/','SNNStimulation50x50PoissonInput.mat'];
+end
 
 %% Simulating network
 h = waitbar(0, 'Initializing...'); % Initialize waitbar
@@ -35,16 +38,15 @@ save_interval = total_iterations/20;
 
 rate = 20;                       % Firing rate in Hz
 duration = 1;    
-spike_train_ext = gpuArray(generate_poisson_spikes_N(parameters.num_neurons, rate, duration, parameters.dt));
+spike_train_ext = generate_poisson_spikes_N(parameters.num_neurons, rate, duration, parameters.dt);
 
 for i = 1:total_iterations
-
-    I_ext = gpuArray(zeros(parameters.num_neurons, 1));
+    I_ext = zeros(parameters.num_neurons, 1);
    
     if i <= size(spike_train_ext,2)
         spike_ext = squeeze(spike_train_ext(:,i));
     else
-        spike_ext = gpuArray(false(parameters.num_neurons,1));
+        spike_ext = false(parameters.num_neurons,1);
     end
 
     % Update network
@@ -57,7 +59,7 @@ for i = 1:total_iterations
     
     % Update waitbar with progress and estimated time left
     waitbar(i / total_iterations, h, sprintf('SNN Simulation Progress: %.2f%% | Time left: %.2f sec',(i / total_iterations) * 100, estimated_time_left));
-    if mod(i, save_interval) == 0 || i == total_iterations
+    if (mod(i, save_interval) == 0 || i == total_iterations) && saveFlag == 1
         save(sessionName,"-v7.3");
         fprintf('Workspace saved at %d%% completion.\n', round((i / total_iterations) * 100));
     end

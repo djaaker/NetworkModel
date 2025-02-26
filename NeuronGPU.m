@@ -23,7 +23,7 @@ classdef NeuronGPU
         gi                          % inhibitory conductance
 
         GL = 10e-9;                 % leak conductance
-        GE = 1e-9;                  % excitatory synaptic weight
+        GE = 5e-9;                  % excitatory synaptic weight
         GI = 10e-9;                 % inhibitory synaptic weight
 
         tau_syn_e = 5e-3;           % excitatory synpatic time constant
@@ -39,12 +39,12 @@ classdef NeuronGPU
 
             obj.id = id;
             obj.is_excitatory = is_excitatory;
-            obj.connections_E = gpuArray(connections_E);
-            obj.connections_I = gpuArray(connections_I);
+            obj.connections_E = connections_E;
+            obj.connections_I = connections_I;
             obj.x_coord = x_coord;
             obj.y_coord = y_coord;
-            obj.connection_delays_E = gpuArray(connection_delays_E);
-            obj.connection_delays_I = gpuArray(connection_delays_I);
+            obj.connection_delays_E = connection_delays_E;
+            obj.connection_delays_I = connection_delays_I;
 
             obj.V = obj.E_L;
             obj.ge = 0;
@@ -93,4 +93,3 @@ classdef NeuronGPU
 
     end
 end
-

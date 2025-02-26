@@ -23,7 +23,7 @@ classdef Neuron
         gi                          % inhibitory conductance
 
         GL = 10e-9;                 % leak conductance
-        GE = 1e-9;                  % excitatory synaptic weight
+        GE = 5e-9;                  % excitatory synaptic weight
         GI = 10e-9;                 % inhibitory synaptic weight
 
         tau_syn_e = 5e-3;           % excitatory synpatic time constant
@@ -62,6 +62,7 @@ classdef Neuron
         function [obj, spike] = update(obj,I_ext,spike_ext,dt,time)
             % For excitatory conductance
             spikes_delay = obj.spikes_e_buff.get_behind(obj.connection_delays_E+1);
+            
             delta_ge = (sum(spikes_delay,'all')+spike_ext)*obj.GE;
             obj.ge = obj.ge - obj.ge/obj.tau_syn_e + delta_ge;
 
@@ -87,8 +88,8 @@ classdef Neuron
         end
         
         function obj = update_spikes_buff(obj,last_spikes)
-            obj.spikes_e_buff.push(last_spikes(obj.connections_E));
-            obj.spikes_i_buff.push(last_spikes(obj.connections_I));
+            obj.spikes_e_buff = obj.spikes_e_buff.push(last_spikes(obj.connections_E));
+            obj.spikes_i_buff = obj.spikes_i_buff.push(last_spikes(obj.connections_I));
         end
 
     end

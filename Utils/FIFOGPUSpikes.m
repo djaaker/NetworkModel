@@ -1,4 +1,4 @@
-classdef FIFOSpikes
+classdef FIFOGPUSpikes
     properties
         buffer      % 2D matrix to store columns
         head = 1    % Index of the oldest column
@@ -7,9 +7,9 @@ classdef FIFOSpikes
         isFull = false  % Indicates if the buffer is full
     end
     methods
-        function obj = FIFOSpikes(numRows, maxCols)
+        function obj = FIFOGPUSpikes(numRows, maxCols)
             obj.capacity = maxCols;
-            obj.buffer = false(numRows, maxCols); % Preallocate with NaNs
+            obj.buffer = gpuArray(false(numRows, maxCols)); % Preallocate with NaNs
         end
         
         function obj = push(obj, colVector)

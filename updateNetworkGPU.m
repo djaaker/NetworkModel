@@ -13,4 +13,3 @@ parfor i = 1:num_neurons
 end
 
 end
-
