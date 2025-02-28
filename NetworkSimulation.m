@@ -1,6 +1,6 @@
 %% Network Paramters 
 %Number of neurons in one dimension 
-grid_size = 100;
+grid_size = 150;
 excitatory_ratio = 0.8;
 % Size of the patch of cortex to simulate 
 grid_length = 0.55e-3; % in m
