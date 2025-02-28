@@ -1,10 +1,15 @@
+<<<<<<< HEAD
 function [indx,actual_distance] = find_closest(neuron_idx,target_distance,X,Y)
+=======
+function [indx] = find_closest(neuron_idx,target_distance,X,Y)
+>>>>>>> d59761fc73fbfc3c0243bda96adde8fdfe8ef1f6
 
 x_coord_neuron = X(neuron_idx);
 y_coord_neuron = Y(neuron_idx);
 
 D = sqrt((X-x_coord_neuron).^2 + (Y-y_coord_neuron).^2);
 
+<<<<<<< HEAD
 if max(D)<target_distance
     indx = -1;
     actual_distance = 0;
@@ -30,6 +35,9 @@ min_indxs = find(D==min_d);
 indx = min_indxs(randi(length(min_indxs)));
 
 actual_distance = D(indx);
+=======
+
+>>>>>>> d59761fc73fbfc3c0243bda96adde8fdfe8ef1f6
 
 end
 

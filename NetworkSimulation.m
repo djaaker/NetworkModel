@@ -1,5 +1,10 @@
 %% Network Paramters 
+<<<<<<< HEAD
 target_neuron_density = 2.8125e10; % per m2
+=======
+%Number of neurons in one dimension 
+grid_size = 150;
+>>>>>>> d59761fc73fbfc3c0243bda96adde8fdfe8ef1f6
 excitatory_ratio = 0.8;
 grid_size = 50;
 grid_length = 0.3e-3;
