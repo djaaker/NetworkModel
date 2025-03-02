@@ -23,8 +23,8 @@ classdef Neuron
         gi                          % inhibitory conductance
 
         GL = 10e-9;                 % leak conductance
-        GE = 5e-9;                  % excitatory synaptic weight
-        GI = 25e-9;                 % inhibitory synaptic weight
+        GE = 3e-9;                  % excitatory synaptic weight
+        GI = 30e-9;                 % inhibitory synaptic weight
 
         tau_syn_e = 5e-3;           % excitatory synpatic time constant
         tau_syn_i = 5e-3;           % inhibitory synpatic time constant
@@ -45,8 +45,13 @@ classdef Neuron
             obj.y_coord = y_coord;
             obj.connection_delays_E = connection_delays_E;
             obj.connection_delays_I = connection_delays_I;
-
-            obj.V = obj.E_L;
+            
+            % Define voltage range in volts
+            minVoltage = -70e-3; % -70 mV in V
+            maxVoltage = 0;      % 0 V
+            
+            % Generate a random voltage within the range
+            obj.V = minVoltage + (maxVoltage - minVoltage) * rand;
             obj.ge = 0;
             obj.gi = 0;
 

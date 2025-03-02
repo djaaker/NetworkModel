@@ -1,13 +1,8 @@
 
 target_neuron_density = 2.8125e10; % per m2
 excitatory_ratio = 0.8;
-<<<<<<< HEAD
 grid_size = 50;
 grid_length = 0.3e-3;
-=======
-grid_size = 100;
-grid_length = 0.6e-3;
->>>>>>> d59761fc73fbfc3c0243bda96adde8fdfe8ef1f6
 % Decay constant for connectivity 
 sigma = 0.3e-3; %% in m 
 % Speed of AP 
@@ -15,11 +10,8 @@ vAP = 0.2; % in m/s
 % Synaptic delay 
 tau_syn = 300e-6; % in seconds
 
-<<<<<<< HEAD
 dt = 0.1e-3;
 
-=======
->>>>>>> d59761fc73fbfc3c0243bda96adde8fdfe8ef1f6
 
 % Number of E and I neurons
 num_neurons = grid_size^2;
@@ -78,7 +70,6 @@ Y_e = (reshape(Y_e,[],1)*spacing_e)-x_origin;
 X_i = (reshape(X_i,[],1)*spacing_i)-x_origin;
 Y_i = (reshape(Y_i,[],1)*spacing_i)-x_origin;
 
-<<<<<<< HEAD
 % X = [X_e;X_i];
 % Y = [Y_e;Y_i];
 
@@ -196,18 +187,3 @@ end
 %     end
 %     num_synapses = num_synapses - 1;
 % end
-=======
-X = [X_e;X_i];
-Y = [Y_e;Y_i];
-
-
-
-
-dummy_connection_matrix_e = zeros(K_e,1);
-dummy_connection_matrix_i = zeros(K_i,1);
-
-for id = 1: num_neurons
-    neurons(id) = Neuron(id,~EI_tag(id),dummy_connection_matrix_e,dummy_connection_matrix_e,X(id),Y(id),dummy_connection_matrix_e,dummy_connection_matrix_e);
-end
-
->>>>>>> d59761fc73fbfc3c0243bda96adde8fdfe8ef1f6

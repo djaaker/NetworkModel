@@ -1,9 +1,9 @@
 %% Network Paramters 
 %Number of neurons in one dimension 
-grid_size = 150;
+grid_size = 200;
 excitatory_ratio = 0.8;
 % Size of the patch of cortex to simulate 
-grid_length = 0.9e-3; % in m
+grid_length = 1.2e-3; % in m
 
 
 % Decay constant for connectivity 
@@ -17,20 +17,21 @@ tau_syn = 300e-6; % in seconds
 % time step of simulation in s
 time_step = 0.1e-3;
 % Total time of simulation in s 
-total_time = 0.8;
+total_time = 1.2;
+
+%% Saving session
+saveFlag = 1;
+if saveFlag == 1
+    savepath = uigetdir(path);
+    sessionName = [savepath,'/','SNN2LayerStimulation150x150stim200Hz25ms.mat'];
+    filename = [savepath,'/','SNN2LayerStimulation150x150stim200Hz25ms.mp4'];
+end
 
 %% Create spiling neural network SNN 
 SNN = Network2Layer(grid_size,grid_length,excitatory_ratio, sigma,vAP,tau_syn,time_step,total_time);
 % Checking structure 
 % SNN.plot_network();
 % SNN.plot_neuron_connection(45);
-
-%% Saving session
-saveFlag = 1;
-if saveFlag == 1
-    savepath = uigetdir(path);
-    sessionName = [savepath,'/','SNN2LayerStimulation150x150PoissonInputModulated.mat'];
-end
 
 %% Simulating network
 h = waitbar(0, 'Initializing...'); % Initialize waitbar
@@ -40,20 +41,26 @@ save_interval = total_iterations/10;
 
 %% Generating external input to the network
 N = SNN.num_neurons;             % Number of neurons
-rate_baseline = 20;              % baseline firing rate
-rate_stimulation = 40;           % stimulation modulated firing rate
-rate_baseline_post = 0; 
-baseline_duration = 0.2; 
-stim_duration = 0.2;
+rate_startup = 20;              % baseline firing rate
+rate_stimulation = 200;           % stimulation modulated firing rate
+rate_baseline = 0; 
+
+startup_duration = 0.2; 
+baseline_prestim = 0.4;
+stim_duration = 0.025;
 dt = time_step; 
-spike_train_ext = [generate_poisson_spikes_N(N, rate_baseline, baseline_duration, dt) generate_poisson_spikes_N(N, rate_stimulation, stim_duration, dt) generate_poisson_spikes_N(N, rate_baseline_post, total_time-baseline_duration-stim_duration, dt)];
+spike_train_ext = [generate_poisson_spikes_N(N, rate_startup, startup_duration, dt) generate_poisson_spikes_N(N, rate_baseline, baseline_prestim, dt) generate_poisson_spikes_N(N, rate_stimulation, stim_duration, dt) generate_poisson_spikes_N(N, rate_baseline, total_time-startup_duration-baseline_prestim-stim_duration, dt)];
+
+frac_neurons_ext_input = 1;
+rand_indx_expt_input = (rand(N,1)<frac_neurons_ext_input).*(~SNN.EI_tag)';
+
 
 %% Simulating network
 
 for i = 1:total_iterations
     I_ext = zeros(SNN.num_neurons, 1);
 
-    spike_ext = (squeeze(spike_train_ext(:,i))).*(~SNN.EI_tag)';
+    spike_ext = (squeeze(spike_train_ext(:,i))).*rand_indx_expt_input;
 
     % Update network
     SNN = SNN.update(i, i * time_step, I_ext,spike_ext);
@@ -70,9 +77,14 @@ end
 
 close(h); % Close waitbar when done
 
+plot_spiking_activity_video(SNN, saveflag , filename);
+
+
 %% Plotting
 
 plotSpikingNetwork(SNN)
+
+firingRates = estimateFiringRate(SNN.spikes,20e-3,1/dt);
 
 
 
