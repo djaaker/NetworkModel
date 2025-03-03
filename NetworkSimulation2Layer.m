@@ -11,7 +11,7 @@ sigma = 0.4e-3; %% in m
 % Speed of AP 
 vAP = 0.2; % in m/s
 % Synaptic delay 
-tau_syn = 300e-6; % in seconds
+tau_syn = 400e-6; % in seconds
 
 %% Simulation Parameters
 % time step of simulation in s
@@ -23,11 +23,11 @@ total_time = 1.2;
 saveFlag = 1;
 if saveFlag == 1
     savepath = uigetdir(path);
-    sessionName = [savepath,'/','SNN2LayerStimulation150x150stim200Hz25ms.mat'];
-    filename = [savepath,'/','SNN2LayerStimulation150x150stim200Hz25ms.mp4'];
+    sessionName = [savepath,'/','SNN2LayerStimulation200x200stim200Hz25ms_1.mat'];
+    filename = [savepath,'/','SNN2LayerStimulation200x2000stim200Hz25ms_1.avi'];
 end
 
-%% Create spiling neural network SNN 
+%% Create spiking neural network SNN 
 SNN = Network2Layer(grid_size,grid_length,excitatory_ratio, sigma,vAP,tau_syn,time_step,total_time);
 % Checking structure 
 % SNN.plot_network();
@@ -77,8 +77,10 @@ end
 
 close(h); % Close waitbar when done
 
-plot_spiking_activity_video(SNN, saveflag , filename);
+plot_spiking_activity_video(SNN,dt,saveFlag,filename);
 
+%% Generating LFP
+LFP = calculateLFP(SNN);
 
 %% Plotting
 
@@ -87,6 +89,7 @@ plotSpikingNetwork(SNN)
 firingRates = estimateFiringRate(SNN.spikes,20e-3,1/dt);
 
 
+%%
 
 % figure;
 % plot(SNN.v_neurons(4,:));hold on;

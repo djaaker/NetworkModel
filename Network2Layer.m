@@ -51,7 +51,7 @@ classdef Network2Layer
                 K_i = round(0.2*K);
                 fprintf('The number of synapses from each neuron : %d\n', K);
             else
-                K = round(0.0072*num_neurons);
+                K = round(0.0075*num_neurons);
                 K_e = round(0.8*K);
                 K_i = round(0.2*K);
                 K = K_e + K_i;
