@@ -1,5 +1,5 @@
 function [LFP] = calculateLFP(SNN)
-%% Calculating LFP from the spikes,ge and gi alpha = 1.65;
+    %% Calculating LFP from the spikes,ge and gi alpha = 1.65;
     dt = SNN.dt;
     tau = 0.006;
     tau_shift = tau/dt;
@@ -76,13 +76,13 @@ function [LFP] = calculateLFP(SNN)
     %% Applying a Gaussian kernel to the LFP data
     % Create the Gaussian filter
     gauss_sigma = 2;
-    fprintf('The sigma for the gaussian filter for LFP is : %d%% \n', gauss_sigma*(SNN.grid_length/SNN.grid_size_e)*LFP.lfp_patch_size);
+    fprintf('The sigma for the gaussian filter for LFP is : %d% \n', gauss_sigma*(SNN.grid_length/SNN.grid_size_e)*LFP.lfp_patch_size);
     % Apply convolution with the kernel (preserving the original size)
-    LFP.LFP_gaussian_decimated = zeros(size(LFP.LFP_decimated));
+    LFP.LFP_gaussian_downsampled = zeros(size(LFP.LFP_downsampled));
     LFP.LFP_gaussian = zeros(size(LFP.LFP_combined));
     
-    for i=1:size(LFP.LFP_gaussian_decimated,3)
-        LFP.LFP_gaussian_decimated(:,:,i) = imgaussfilt(squeeze(LFP.LFP_decimated(:,:,i)),gauss_sigma);
+    for i=1:size(LFP.LFP_gaussian_downsampled,3)
+        LFP.LFP_gaussian_downsampled(:,:,i) = imgaussfilt(squeeze(LFP.LFP_downsampled(:,:,i)),gauss_sigma);
     end
 
     for i=1:size(LFP.LFP_gaussian,3)

@@ -88,15 +88,33 @@ LFP = calculateLFP(SNN);
 plotLFP(LFP,SNN,spike_train_ext);
 % Genreating a video of the LFP                 
 generateLFPVideo(LFP.LFP_downsampled, 1/LFP.target_sampling_freq, lfpfilename);
-generateLFPVideo(LFP.LFP_gaussian_decimated, 1/LFP.target_sampling_freq, lfpfilename2);
+generateLFPVideo(LFP.LFP_gaussian_downsampled, 1/LFP.target_sampling_freq, lfpfilename2);
 
+%% Wave detection
+% Filtering and GP 
+filterOrder = 4;
+filterLP1 = 5;
+filterLP2 = 40;
+LFP.xf = bandpass_filter(LFP.LFP_downsampled,filterLP1,filterLP2,filterOrder,LFP.target_sampling_freq);
+[LFP.xgp, LFP.wt] = generalized_phase(LFP.xf,LFP.target_sampling_freq,0);
+
+% Initializing parameters for wave detection
+parameters.rows = LFP.N_blocks_combined;parameters.cols = LFP.N_blocks_combined;
+[parameters.X,parameters.Y] = meshgrid( 1:parameters.cols, 1:parameters.rows );
+parameters.xspacing = LFP.lfp_patch_size*(SNN.grid_length/SNN.grid_size_e) ;parameters.yspacing = LFP.lfp_patch_size*(SNN.grid_length/SNN.grid_size_e);
+parameters.rhoThres= 0.5;
+% Wave detection
+
+allwaves.LFPIndex = (1:1:size(LFP.LFP_combined,3))';
+xf{1,1} = LFP.xf;
+xgp{1,1} = LFP.xgp;
+wt{1,1} = LFP.wt;
+Wavesall = detectWaves(xf,xgp,wt,allwaves,parameters,parameters.rhoThres);
 
 %% Plotting
-
 plotSpikingNetwork(SNN)
 
 firingRates = estimateFiringRate(SNN.spikes,20e-3,1/dt);
-
 %%
 
 % figure;
