@@ -171,7 +171,7 @@ classdef Network2Layer
 
             obj.grid_size_e = grid_size_e;            
             obj.grid_size_i = grid_size_i;             
-            obj.grid_length             
+            obj.grid_length = grid_length;            
             obj.num_neurons = num_neurons;
             obj.neurons = neurons;
             obj.N_E = N_E;

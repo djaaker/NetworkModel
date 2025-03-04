@@ -1,9 +1,9 @@
 %% Network Paramters 
 %Number of neurons in one dimension 
-grid_size = 200;
+grid_size = 250;
 excitatory_ratio = 0.8;
 % Size of the patch of cortex to simulate 
-grid_length = 1.2e-3; % in m
+grid_length = 1.5e-3; % in m
 
 
 % Decay constant for connectivity 
@@ -17,14 +17,16 @@ tau_syn = 400e-6; % in seconds
 % time step of simulation in s
 time_step = 0.1e-3;
 % Total time of simulation in s 
-total_time = 1.2;
+total_time = 0.6;
 
 %% Saving session
 saveFlag = 1;
 if saveFlag == 1
     savepath = uigetdir(path);
-    sessionName = [savepath,'/','SNN2LayerStimulation200x200stim200Hz25ms_1.mat'];
-    filename = [savepath,'/','SNN2LayerStimulation200x2000stim200Hz25ms_1.avi'];
+    sessionName = [savepath,'/','SNN2LayerStimulation250x250startup_20hz_200ms.mat'];
+    filename = [savepath,'/','SNN2LayerStimulation250x250startup_20hz_200ms.avi'];
+    lfpfilename = [savepath,'/','SNN2LayerStimulation250x250startup_20hz_200ms_LFP.avi'];
+    lfpfilename2 = [savepath,'/','SNN2LayerStimulation250x250startup_20hz_200ms_LFPgauss.avi'];
 end
 
 %% Create spiking neural network SNN 
@@ -47,7 +49,7 @@ rate_baseline = 0;
 
 startup_duration = 0.2; 
 baseline_prestim = 0.4;
-stim_duration = 0.025;
+stim_duration = 0.0;
 dt = time_step; 
 spike_train_ext = [generate_poisson_spikes_N(N, rate_startup, startup_duration, dt) generate_poisson_spikes_N(N, rate_baseline, baseline_prestim, dt) generate_poisson_spikes_N(N, rate_stimulation, stim_duration, dt) generate_poisson_spikes_N(N, rate_baseline, total_time-startup_duration-baseline_prestim-stim_duration, dt)];
 
@@ -82,12 +84,18 @@ plot_spiking_activity_video(SNN,dt,saveFlag,filename);
 %% Generating LFP
 LFP = calculateLFP(SNN);
 
+% Plotting LFP, spikes and input 
+plotLFP(LFP,SNN,spike_train_ext);
+% Genreating a video of the LFP                 
+generateLFPVideo(LFP.LFP_downsampled, 1/LFP.target_sampling_freq, lfpfilename);
+generateLFPVideo(LFP.LFP_gaussian_decimated, 1/LFP.target_sampling_freq, lfpfilename2);
+
+
 %% Plotting
 
 plotSpikingNetwork(SNN)
 
 firingRates = estimateFiringRate(SNN.spikes,20e-3,1/dt);
-
 
 %%
 
