@@ -1,4 +1,4 @@
-classdef Network2Layer
+classdef Network2Layer_CPP
     %#codegen
     properties
         grid_size_e             % the size of the grid - excitatory
@@ -20,7 +20,7 @@ classdef Network2Layer
     end
     
     methods
-        function obj = Network2Layer(grid_size,grid_length,excitatory_ratio, sigma,vAP,tau_syn,dt,total_time)
+        function obj = Network2Layer_CPP(grid_size,grid_length,excitatory_ratio, sigma,vAP,tau_syn,dt,total_time,GE,GI,kden)
             
             target_neuron_density = 2.8125e10; % per m2
             % Number of E and I neurons
@@ -48,28 +48,36 @@ classdef Network2Layer
                 disp('Network has target neuron density');
             end
             
-            if (grid_length > 3*sigma)
+            if (grid_length > 5*sigma)
                 K = 1200;
                 K_e = round(0.8*K);
                 K_i = round(0.2*K);
-                fprintf('The number of synapses from each neuron : %d\n', K);
+%                 fprintf('The number of synapses from each neuron : %d\n', K);
             else
-                K = round(0.0075*num_neurons);
+                K = round(kden*num_neurons);
+                % K = round(0.0075*num_neurons);
                 K_e = round(0.8*K);
                 K_i = round(0.2*K);
                 K = K_e + K_i;
-                fprintf('The number of synapses from each neuron : %d\n', K);
+
+%                 fprintf('The number of synapses from each neuron : %d\n', K);
             end
-            
+            disp(K);
             spacing_e =  grid_length/ grid_size_e;
             spacing_i = grid_length/ grid_size_i; 
 
 
             % Distribute E and I neurons 
-            EI_tag = [zeros(1,N_E), ones(1,N_I)];
+            EI_tag = [false(1,N_E), true(1,N_I)];
             
             % Creating an array of Neurons 
-            neurons = Neuron.empty( num_neurons, 0);
+            % neurons = Neuron_CPP.empty( num_neurons, 0);
+            % neurons = createArray(1,num_neurons,"Neuron_CPP");
+            % neurons = repmat(Neuron_CPP(),1,num_neurons);
+            neurons = cell(num_neurons,1);
+            for i=1:num_neurons
+                neurons{i} = Neuron_CPP();
+            end
             
             % Assigning x-y coordinates to the neurons
             x_origin = (grid_size_e*spacing_e)/2;
@@ -124,7 +132,7 @@ classdef Network2Layer
                     % adjusting for e neurons before i neurons
                     connections_I = connections_I + N_E;
             
-                    neurons(neuron_idx) = Neuron(neuron_idx,~EI_tag(neuron_idx),connections_E,connections_I,X_e(neuron_idx),Y_e(neuron_idx),connection_delays_E,connection_delays_I);
+                    neurons{neuron_idx} = Neuron_CPP(neuron_idx,~EI_tag(neuron_idx),connections_E,connections_I,X_e(neuron_idx),Y_e(neuron_idx),connection_delays_E,connection_delays_I,GE,GI);
                 end
             end
 
@@ -167,7 +175,7 @@ classdef Network2Layer
                     % adjusting for e neurons before i neurons
                     connections_I = connections_I + N_E;
             
-                    neurons(neuron_idx+N_E) = Neuron(neuron_idx+N_E,~EI_tag(neuron_idx+N_E),connections_E,connections_I,X_i(neuron_idx),Y_i(neuron_idx),connection_delays_E,connection_delays_I);
+                    neurons{neuron_idx+N_E} = Neuron_CPP(neuron_idx+N_E,~EI_tag(neuron_idx+N_E),connections_E,connections_I,X_i(neuron_idx),Y_i(neuron_idx),connection_delays_E,connection_delays_I,GE,GI);
                 end
             end
 
@@ -182,11 +190,11 @@ classdef Network2Layer
             obj.K_e = K_e;
             obj.K_i = K_i;
             obj.dt = dt;
-            n_time = round(obj.total_time/obj.dt);
-            obj.spikes = false(obj.num_neurons,n_time);
-            obj.v_neurons = zeros(obj.num_neurons,n_time);
-            obj.ge_neurons = zeros(obj.num_neurons,n_time);
-            obj.gi_neurons = zeros(obj.num_neurons,n_time);      
+            % n_time = obj.total_time/obj.dt;
+            obj.spikes = false(90586,12000);
+            obj.v_neurons = zeros(90586,12000);
+            obj.ge_neurons = zeros(90586,12000);
+            obj.gi_neurons = zeros(90586,12000);      
             obj.total_time = total_time;     
             obj.EI_tag = EI_tag;             
 
@@ -230,12 +238,12 @@ classdef Network2Layer
         
             % Parallelized neuron updates
             for i = 1:num_neurons_tmp
-                neuron = neuron_data(i); % Copy handle object
+                neuron = neuron_data{i}; % Copy handle object
                 [neuron, spikes_tmp(i)] = neuron.update(I_ext(i),spike_ext(i), dt1, time);
                 v_tmp(i) = neuron.V; % Store new voltage
                 ge_tmp(i) = neuron.ge; % Store new ge
                 gi_tmp(i) = neuron.gi; % Store new gi
-                neuron_data(i) = neuron; % Store modified neuron
+                neuron_data{i} = neuron; % Store modified neuron
             end
         
             % Assign back computed results
@@ -248,50 +256,50 @@ classdef Network2Layer
             % Serial update of spikes in all neurons
             spikes_current = squeeze(obj.spikes(:, time_indx)); 
             for i = 1:num_neurons_tmp
-                neuron_data(i) = neuron_data(i).update_spikes_buff(spikes_current);
+                neuron_data{i} = neuron_data{i}.update_spikes_buff(spikes_current);
             end
 
             obj.neurons = neuron_data; % Assign updated neurons back
         end
 
-        function obj = update_par(obj, time_indx, time, I_ext,spike_ext)
-            num_neurons_tmp = obj.num_neurons;  % Avoid repeated property access
-        
-            % Preallocate arrays for neuron properties
-            spikes_tmp = false(num_neurons_tmp, 1); 
-            v_tmp = zeros(num_neurons_tmp, 1);
-            ge_tmp = zeros(num_neurons_tmp, 1);
-            gi_tmp = zeros(num_neurons_tmp, 1);
-            
-            % Extract necessary properties to reduce handle object overhead
-            dt1 = obj.dt;
-            neuron_data = obj.neurons; % Store handle references (not used in `parfor` directly)
-        
-            % Parallelized neuron updates
-            parfor i = 1:num_neurons_tmp
-                neuron = neuron_data(i); % Copy handle object
-                [neuron, spikes_tmp(i)] = neuron.update(I_ext(i),spike_ext(i), dt1, time);
-                v_tmp(i) = neuron.V; % Store new voltage
-                ge_tmp(i) = neuron.ge; % Store new ge
-                gi_tmp(i) = neuron.gi; % Store new gi
-                neuron_data(i) = neuron; % Store modified neuron
-            end
-        
-            % Assign back computed results
-            obj.spikes(:, time_indx) = spikes_tmp;
-            obj.v_neurons(:, time_indx) = v_tmp;
-            obj.ge_neurons(:, time_indx) = ge_tmp;
-            obj.gi_neurons(:, time_indx) = gi_tmp;
-            
-        
-            % Serial update of spikes in all neurons
-            spikes_current = squeeze(obj.spikes(:, time_indx)); 
-            parfor i = 1:num_neurons_tmp
-                neuron_data(i) = neuron_data(i).update_spikes_buff(spikes_current);
-            end
-
-            obj.neurons = neuron_data; % Assign updated neurons back
-        end
+        % function obj = update_par(obj, time_indx, time, I_ext,spike_ext)
+        %     num_neurons_tmp = obj.num_neurons;  % Avoid repeated property access
+        % 
+        %     % Preallocate arrays for neuron properties
+        %     spikes_tmp = false(num_neurons_tmp, 1); 
+        %     v_tmp = zeros(num_neurons_tmp, 1);
+        %     ge_tmp = zeros(num_neurons_tmp, 1);
+        %     gi_tmp = zeros(num_neurons_tmp, 1);
+        % 
+        %     % Extract necessary properties to reduce handle object overhead
+        %     dt1 = obj.dt;
+        %     neuron_data = obj.neurons; % Store handle references (not used in `parfor` directly)
+        % 
+        %     % Parallelized neuron updates
+        %     parfor i = 1:num_neurons_tmp
+        %         neuron = neuron_data(i); % Copy handle object
+        %         [neuron, spikes_tmp(i)] = neuron.update(I_ext(i),spike_ext(i), dt1, time);
+        %         v_tmp(i) = neuron.V; % Store new voltage
+        %         ge_tmp(i) = neuron.ge; % Store new ge
+        %         gi_tmp(i) = neuron.gi; % Store new gi
+        %         neuron_data(i) = neuron; % Store modified neuron
+        %     end
+        % 
+        %     % Assign back computed results
+        %     obj.spikes(:, time_indx) = spikes_tmp;
+        %     obj.v_neurons(:, time_indx) = v_tmp;
+        %     obj.ge_neurons(:, time_indx) = ge_tmp;
+        %     obj.gi_neurons(:, time_indx) = gi_tmp;
+        % 
+        % 
+        %     % Serial update of spikes in all neurons
+        %     spikes_current = squeeze(obj.spikes(:, time_indx)); 
+        %     parfor i = 1:num_neurons_tmp
+        %         neuron_data(i) = neuron_data(i).update_spikes_buff(spikes_current);
+        %     end
+        % 
+        %     obj.neurons = neuron_data; % Assign updated neurons back
+        % end
 
     end
 end

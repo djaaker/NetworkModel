@@ -1,4 +1,5 @@
 classdef FIFOSpikes
+    %#codegen
     properties
         buffer      % 2D matrix to store columns
         head = 1    % Index of the oldest column

@@ -1,4 +1,5 @@
 classdef Neuron
+    %#codegen
     properties
         id                          % the id of the neuron 1 <= id <= N where N is the total number of neurons
         is_excitatory               % True if excitatory, false if inhibitory
