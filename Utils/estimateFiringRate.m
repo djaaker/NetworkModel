@@ -1,4 +1,4 @@
-function firingRates = estimateFiringRate(spikingData, binDuration, samplingRate)
+function [firingRates,time_vector] = estimateFiringRate(spikingData, binDuration, samplingRate)
 % estimateFiringRate - Estimate firing rates by binning spiking data.
 %
 % Syntax:  firingRates = estimateFiringRate(spikingData, binDuration, samplingRate)
@@ -32,13 +32,19 @@ function firingRates = estimateFiringRate(spikingData, binDuration, samplingRate
     % Preallocate firingRates matrix
     firingRates = zeros(numNeurons, numBins);
 
+    % time 
+    time_vector = zeros(numBins,1);
+
     % Loop through each bin, sum the spikes, and convert count to Hz
     for bin = 1:numBins
         idxStart = (bin - 1) * samplesPerBin + 1;
         idxEnd = bin * samplesPerBin;
+        time_vector(bin) = (idxEnd+idxStart)/2;
         % Sum spikes in each bin for each neuron
         binSpikeCount = sum(spikingData(:, idxStart:idxEnd), 2);
         % Convert spike count to firing rate (spikes per second)
         firingRates(:, bin) = binSpikeCount / binDuration;
     end
+
+    time_vector = time_vector/samplingRate;
 end

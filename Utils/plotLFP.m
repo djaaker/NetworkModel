@@ -1,4 +1,4 @@
-function [] = plotLFP(LFP,SNN,spike_train_ext)
+function [fig] = plotLFP(LFP,SNN,spike_train_ext)
     
     LPF_stack = reshape(LFP.LFP_downsampled,LFP.N_blocks_combined^2,[]);
     
@@ -6,7 +6,7 @@ function [] = plotLFP(LFP,SNN,spike_train_ext)
     
     %% Ploting a stack plot of the LFP 
     n_plots = 5;
-    figure();
+    fig = figure;
     ax1 = subplot(n_plots,1,1);
     stack_plot(LPF_stack,0,20,LFP.target_sampling_freq);
     ylabel('LFP Amplitude (a.u.)');xlabel(['Time ' ...

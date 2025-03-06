@@ -191,10 +191,10 @@ classdef Network2Layer_CPP
             obj.K_i = K_i;
             obj.dt = dt;
             % n_time = obj.total_time/obj.dt;
-            obj.spikes = false(90586,12000);
-            obj.v_neurons = zeros(90586,12000);
-            obj.ge_neurons = zeros(90586,12000);
-            obj.gi_neurons = zeros(90586,12000);      
+            obj.spikes = false(10125,4000);
+            obj.v_neurons = zeros(10125,4000);
+            obj.ge_neurons = zeros(10125,4000);
+            obj.gi_neurons = zeros(10125,4000);      
             obj.total_time = total_time;     
             obj.EI_tag = EI_tag;             
 

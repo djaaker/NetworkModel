@@ -68,6 +68,13 @@ classdef FIFOSpikes
                 obj = obj.push(colMatrix(:, j)); % Push each column one by one
             end
         end
+        
+        function obj = clearBuffer(obj)
+            obj.buffer = false(size(obj.buffer)); % Preallocate with NaNs
+            obj.head = 1;
+            obj.tail = 1;
+            obj.isFull = false;
+        end
     end
 end
 

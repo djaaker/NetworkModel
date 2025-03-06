@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.coder" plugin-version="R2024a">
-  <configuration build-checksum="2228161386" file="C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\NetworkSimulation2Layer_CPP.prj" location="C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation" name="NetworkSimulation2Layer_CPP" target="target.unifiedcoder" target-name="MATLAB Coder">
+  <configuration build-checksum="2288759222" file="C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\NetworkSimulation2Layer_CPP.prj" location="C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation" name="NetworkSimulation2Layer_CPP" target="target.unifiedcoder" target-name="MATLAB Coder">
     <profile key="profile.mex">
       <param.BuiltInstrumentedMex>false</param.BuiltInstrumentedMex>
       <param.RanInstrumentedMex>false</param.RanInstrumentedMex>
@@ -51,7 +51,7 @@
       <param.DefaultTestFile />
       <param.MergeInstrumentationResults>false</param.MergeInstrumentationResults>
       <param.VerificationMode>option.VerificationMode.None</param.VerificationMode>
-      <param.VerificationStatus>option.VerificationStatus.Passed</param.VerificationStatus>
+      <param.VerificationStatus>option.VerificationStatus.FailedBuild</param.VerificationStatus>
       <param.EnableMexProfiling>false</param.EnableMexProfiling>
       <var.BuiltWithMexProfiling>false</var.BuiltWithMexProfiling>
       <param.CustomSourceCode />
@@ -617,7 +617,7 @@
     </param.TestSnippets>
     <param.ExternalFcnMajority>column</param.ExternalFcnMajority>
     <param.UseGlobals>option.UseGlobals.No</param.UseGlobals>
-    <param.outputfile>${PROJECT_ROOT}\NetworkSimulation2Layer_CPP_mex2.mexw64</param.outputfile>
+    <param.outputfile>${PROJECT_ROOT}\NetworkSimulation2Layer_CPP_mex300.mexw64</param.outputfile>
     <param.version>R2012a</param.version>
     <param.HasECoderFeatures>true</param.HasECoderFeatures>
     <param.HasGpuCoder>true</param.HasGpuCoder>
@@ -645,16 +645,16 @@
     <var.DismissScreener>true</var.DismissScreener>
     <param.unifiedParamStorage />
     <param.hdlParamStorage />
-    <var.gc.lastOutputRoot>codegen\mex\NetworkSimulation2Layer_CPP</var.gc.lastOutputRoot>
+    <var.gc.lastOutputRoot />
     <var.gc.lastOutputType>MEX_FILE</var.gc.lastOutputType>
-    <var.gc.preBuildChecksum>2615271088</var.gc.preBuildChecksum>
+    <var.gc.preBuildChecksum>2288759222</var.gc.preBuildChecksum>
     <var.cfi.lastOutputRoot>codegen\mex\NetworkSimulation2Layer_CPP</var.cfi.lastOutputRoot>
-    <var.cfi.preBuildChecksum>3306721252</var.cfi.preBuildChecksum>
+    <var.cfi.preBuildChecksum>3571118955</var.cfi.preBuildChecksum>
     <var.lastCfiTestSnippet>NetworkSimulationTestbench</var.lastCfiTestSnippet>
     <var.outdatedOnRestore>false</var.outdatedOnRestore>
-    <var.lastUserSourceChecksum>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;checksum&gt;&lt;includedFiles&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\Network2Layer_CPP.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\NetworkSimulation2Layer_CPP.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\Neuron_CPP.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\FIFOSpikes.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\randomSampleFromArray.m&lt;/file&gt;&lt;/includedFiles&gt;&lt;value&gt;2325141859&lt;/value&gt;&lt;/checksum&gt;</var.lastUserSourceChecksum>
+    <var.lastUserSourceChecksum>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;checksum&gt;&lt;includedFiles&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\Network2Layer_CPP.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\NetworkSimulation2Layer_CPP.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\Neuron_CPP.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\FIFOSpikes.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\randomSampleFromArray.m&lt;/file&gt;&lt;/includedFiles&gt;&lt;value&gt;2506503665&lt;/value&gt;&lt;/checksum&gt;</var.lastUserSourceChecksum>
     <var.sourceSetState>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;sourceModel&gt;&lt;primarySourceFiles&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\Network2Layer_CPP.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\NetworkSimulation2Layer_CPP.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\Neuron_CPP.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\FIFOSpikes.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\randomSampleFromArray.m&lt;/file&gt;&lt;/primarySourceFiles&gt;&lt;fixedPointSourceFiles/&gt;&lt;fixedPointSourceRegistered&gt;false&lt;/fixedPointSourceRegistered&gt;&lt;fixedPointSourceSelected&gt;false&lt;/fixedPointSourceSelected&gt;&lt;/sourceModel&gt;</var.sourceSetState>
-    <param.forceMexBuild>true</param.forceMexBuild>
+    <param.forceMexBuild>false</param.forceMexBuild>
     <param.NoDefaultJIT>false</param.NoDefaultJIT>
     <param.configImportActive>false</param.configImportActive>
     <var.isGpuCoder>false</var.isGpuCoder>
@@ -667,10 +667,10 @@
     <param.EnableStructExplosion>true</param.EnableStructExplosion>
     <param.ForceANSIC>false</param.ForceANSIC>
     <param.NumCompileJobs>1</param.NumCompileJobs>
-    <param.mex.outputfile>NetworkSimulation2Layer_CPP_mex2</param.mex.outputfile>
+    <param.mex.outputfile>NetworkSimulation2Layer_CPP_mex300</param.mex.outputfile>
     <param.grt.outputfile>NetworkSimulation2Layer_CPP</param.grt.outputfile>
     <param.artifact>option.target.artifact.mex</param.artifact>
-    <param.outputfile>${PROJECT_ROOT}\NetworkSimulation2Layer_CPP_mex2.mexw64</param.outputfile>
+    <param.outputfile>${PROJECT_ROOT}\NetworkSimulation2Layer_CPP_mex300.mexw64</param.outputfile>
     <param.CppNamespace />
     <param.CppPreserveNamespaces>true</param.CppPreserveNamespaces>
     <param.CppNamespaceForMathworksCode>coder</param.CppNamespaceForMathworksCode>
@@ -699,8 +699,8 @@
     <param.deeplearning.DeepLearningCustomCallback />
     <param.deeplearning.TargetLib>option.deeplearning.targetlibrary.none</param.deeplearning.TargetLib>
     <var.cfiTargetLibSuppression>true</var.cfiTargetLibSuppression>
-    <var.hasMatlabDeepLearningSupportPackage>false</var.hasMatlabDeepLearningSupportPackage>
-    <var.hasGpuDeepLearningSupportPackage>false</var.hasGpuDeepLearningSupportPackage>
+    <var.hasMatlabDeepLearningSupportPackage>true</var.hasMatlabDeepLearningSupportPackage>
+    <var.hasGpuDeepLearningSupportPackage>true</var.hasGpuDeepLearningSupportPackage>
     <param.tensorrt.DataType>option.tensorrt.datatype.fp32</param.tensorrt.DataType>
     <param.tensorrt.DataPath />
     <param.tensorrt.NumCalibrationBatches>0</param.tensorrt.NumCalibrationBatches>
@@ -788,7 +788,9 @@
       <var.redirectedInputTypeData />
       <param.unifiedParamStorage />
       <param.hdlParamStorage />
+      <var.gc.lastOutputRoot />
       <var.outdatedOnRestore />
+      <param.forceMexBuild />
       <param.NoDefaultJIT />
       <param.configImportActive />
       <var.isGpuCoder />
@@ -829,6 +831,8 @@
       <param.deeplearning.EnableDeepLearning />
       <param.deeplearning.DeepLearningCustomCallback />
       <param.deeplearning.TargetLib />
+      <var.hasMatlabDeepLearningSupportPackage />
+      <var.hasGpuDeepLearningSupportPackage />
       <param.tensorrt.DataType />
       <param.tensorrt.DataPath />
       <param.tensorrt.NumCalibrationBatches />
@@ -946,7 +950,7 @@
       </file>
     </fileset.inputtypes>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}" name="NetworkSimulation2Layer_CPP_mex2.mexw64" optional="false">C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\NetworkSimulation2Layer_CPP_mex2.mexw64</file>
+      <file location="${PROJECT_ROOT}" name="NetworkSimulation2Layer_CPP_mex300.mexw64" optional="false">C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\NetworkSimulation2Layer_CPP_mex300.mexw64</file>
     </build-deliverables>
     <workflow />
     <matlab>

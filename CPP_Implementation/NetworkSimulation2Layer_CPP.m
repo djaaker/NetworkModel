@@ -13,7 +13,7 @@ function [SNN] =  NetworkSimulation2Layer_CPP(grid_size,excitatory_ratio,grid_le
     for i = 1:total_iterations
         I_ext = zeros(SNN.num_neurons, 1);
     
-        spike_ext = (squeeze(spike_train_ext(:,i))).*(~SNN.EI_tag)';
+        spike_ext = (squeeze(spike_train_ext(:,i)))&(~SNN.EI_tag)';
     
         % Update network
         SNN = SNN.update(i, i * time_step, I_ext,spike_ext);

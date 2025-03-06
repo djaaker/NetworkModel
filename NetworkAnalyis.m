@@ -1,14 +1,31 @@
+%% Get directory to save the plots and videos
+% Prompt user to select a directory
+save_dir = uigetdir('', 'Select Directory to save plots and videos');
+folderpath = [save_dir, '/' , 'Plots'];
+mkdir(folderpath);
+
+%% Plot network properties
+fig(1) = plotNetworkProperties(25000,SNN);
+savefig(fig(1),[folderpath,'/','networkConnections.fig']);
 %% Plotting and generating video for spiking activity
-plot_spiking_activity_video(SNN,dt,saveFlag,filename);
+plot_spiking_activity_video(SNN,dt,1,filename);
+
+%% PLotting single neuron dynamics
+fig(2) = plotSingleNeuronDynamics(25000,SNN);
+savefig(fig(2),[folderpath,'/','singleNeuronDynamic.fig']);
 
 %% Generating LFP
 LFP = calculateLFP(SNN);
 
 % Plotting LFP, spikes and input 
-plotLFP(LFP,SNN,spike_train_ext);
-% Genreating a video of the LFP                 
+fig(3) = plotLFP(LFP,SNN,spike_train_ext);
+savefig(fig(3),[folderpath,'/','LFP_Spikes.fig']);
+
+% Genreating a video of the LFP
+lfpfilename = [folderpath,'/','LFP_block.avi'];
 generateLFPVideo(LFP.LFP_downsampled, 1/LFP.target_sampling_freq, lfpfilename);
-generateLFPVideo(LFP.LFP_gaussian_downsampled, 1/LFP.target_sampling_freq, lfpfilename2);
+lfpfilename = [folderpath,'/','LFP_gauss.avi'];
+generateLFPVideo(LFP.LFP_gaussian_downsampled, 1/LFP.target_sampling_freq, lfpfilename);
 
 %% Wave detection
 % Filtering and GP 
@@ -33,9 +50,9 @@ wt{1,1} = LFP.wt;
 Wavesall = detectWaves(xf,xgp,wt,allwaves,parameters,parameters.rhoThres);
 
 %% Plotting
-plotSpikingNetwork(SNN)
+fig(4) = plotSpikingNetwork(SNN);
 
-firingRates = estimateFiringRate(SNN.spikes,20e-3,1/dt);
+
 %%
 
 % figure;

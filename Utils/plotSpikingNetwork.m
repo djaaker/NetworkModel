@@ -1,4 +1,4 @@
-function plotSpikingNetwork(SNN)
+function [fig] = plotSpikingNetwork(SNN)
     % Extract spike data
     spike_matrix = SNN.spikes;  % Binary matrix of spikes (neurons x time)
     EI_tag = SNN.EI_tag;        % 0 for excitatory, 1 for inhibitory
@@ -29,7 +29,7 @@ function plotSpikingNetwork(SNN)
     mean_gi = mean(SNN.gi_neurons, 1);
 
     % Create figure with subplots
-    figure;
+    fig = figure;
     
     % Raster plot (top)
     subplot(2,1,1);

@@ -65,7 +65,7 @@ function [LFP] = calculateLFP(SNN)
 
     LFP.LFP_downsampled = LFP.LFP_combined(:,:,1:downsampling_ratio:end);
 
-    LFP.LFP_decimated = zeros(N_blocks_combined,N_blocks_combined,T/downsampling_ratio);
+    % LFP.LFP_decimated = zeros(N_blocks_combined,N_blocks_combined,T/downsampling_ratio);
 
     for i = 1:N_blocks_combined % rows
         for j = 1:N_blocks_combined % cols
@@ -76,7 +76,7 @@ function [LFP] = calculateLFP(SNN)
     %% Applying a Gaussian kernel to the LFP data
     % Create the Gaussian filter
     gauss_sigma = 4;
-    fprintf('The sigma for the gaussian filter for LFP is : %d% \n', gauss_sigma*(SNN.grid_length/SNN.grid_size_e)*LFP.lfp_patch_size);
+    sprintf('The sigma for the gaussian filter for LFP is : %d% \n', gauss_sigma*(SNN.grid_length/SNN.grid_size_e)*LFP.lfp_patch_size);
     % Apply convolution with the kernel (preserving the original size)
     LFP.LFP_gaussian_downsampled = zeros(size(LFP.LFP_downsampled));
     LFP.LFP_gaussian = zeros(size(LFP.LFP_combined));

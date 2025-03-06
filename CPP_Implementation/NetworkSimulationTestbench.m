@@ -1,9 +1,9 @@
 %% Network Paramters 
 %Number of neurons in one dimension 
-grid_size = 300;
+grid_size = 100;
 excitatory_ratio = 0.8;
 % Size of the patch of cortex to simulate 
-grid_length = 1.8e-3; % in m
+grid_length = 0.6e-3; % in m
 
 
 %% Connectivity Parameters
@@ -23,10 +23,10 @@ GI = 30e-9;
 % time step of simulation in s
 time_step = 0.1e-3;
 % Total time of simulation in s 
-total_time = 1.2;
+total_time = 0.4;
 
 %% Saving session
-saveFlag = 1;
+saveFlag = 0;
 if saveFlag == 1
     savepath = uigetdir(path);
     sessionName = [savepath,'/','SNN2LayerStimulation300x200startup_20hz_200ms_stim_cpp.mat'];
@@ -50,8 +50,8 @@ rate_stimulation = 200;           % stimulation modulated firing rate
 rate_baseline = 0; 
 
 startup_duration = 0.2; 
-baseline_prestim = 0.4;
-stim_duration = 0.025;
+baseline_prestim = 0.2;
+stim_duration = 0;
 dt = time_step; 
 spike_train_ext = [generate_poisson_spikes_N(N, rate_startup, startup_duration, dt) generate_poisson_spikes_N(N, rate_baseline, baseline_prestim, dt) generate_poisson_spikes_N(N, rate_stimulation, stim_duration, dt) generate_poisson_spikes_N(N, rate_baseline, total_time-startup_duration-baseline_prestim-stim_duration, dt)];
 

@@ -1,10 +1,10 @@
 
 %% Network Paramters 
 %Number of neurons in one dimension 
-grid_size = 250;
+grid_size = 100;
 excitatory_ratio = 0.8;
 % Size of the patch of cortex to simulate 
-grid_length = 1.5e-3; % in m
+grid_length = 0.6e-3; % in m
 
 
 % Decay constant for connectivity 
@@ -12,16 +12,16 @@ sigma = 0.4e-3; %% in m
 % Speed of AP 
 vAP = 0.2; % in m/s
 % Synaptic delay 
-tau_syn = 400e-6; % in seconds
+tau_syn = 300e-6; % in seconds
 
 %% Simulation Parameters
 % time step of simulation in s
 time_step = 0.1e-3;
 % Total time of simulation in s 
-total_time = 0.6;
+total_time = 0.4;
 
 %% Saving session
-saveFlag = 1;
+saveFlag = 0;
 if saveFlag == 1
     savepath = uigetdir(path);
     sessionName = [savepath,'/','SNN2LayerStimulation250x250startup_20hz_200ms.mat'];
@@ -63,7 +63,7 @@ rand_indx_expt_input = (rand(N,1)<frac_neurons_ext_input).*(~SNN.EI_tag)';
 for i = 1:total_iterations
     I_ext = zeros(SNN.num_neurons, 1);
 
-    spike_ext = (squeeze(spike_train_ext(:,i))).*rand_indx_expt_input;
+    spike_ext = (squeeze(spike_train_ext(:,i)))&(~SNN.EI_tag)';
 
     % Update network
     SNN = SNN.update(i, i * time_step, I_ext,spike_ext);
