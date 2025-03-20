@@ -1,4 +1,4 @@
-function plot_spiking_activity_video(SNN, dt, saveflag , filename)
+function plot_spiking_activity_video(SNN, spikes,dt, saveflag , filename)
     % PLOT_SPIKING_ACTIVITY_VIDEO Generates a video of neuron spiking activity
    
     % Video settings
@@ -10,7 +10,7 @@ function plot_spiking_activity_video(SNN, dt, saveflag , filename)
     end
 
     % Number of neurons and time steps
-    spike_matrix = SNN.spikes(1:SNN.N_E,:);
+    spike_matrix = spikes(1:SNN.N_E,:);
     num_time_steps = size(spike_matrix, 2);
 
     % Initialize figure and scatter plot
@@ -20,6 +20,7 @@ function plot_spiking_activity_video(SNN, dt, saveflag , filename)
     caxis([0 1]); % Ensure consistent scaling
     axis equal;
     axis off;
+    box off;
 
     % Create neuron activity grid
     activity_grid = zeros(SNN.grid_size_e, SNN.grid_size_e);
@@ -36,8 +37,8 @@ function plot_spiking_activity_video(SNN, dt, saveflag , filename)
         % Update imagesc data instead of re-plotting
         set(hImage, 'CData', activity_grid);
         set(titleHandle, 'String', sprintf('Neuron Spiking Activity - Time: %.3f s', t * dt));
-        drawnow;
-        pause(0.002);
+%         drawnow;
+        pause(0.00001);
         if saveflag == 1
             % Capture frame for video
             frame = getframe(gcf);

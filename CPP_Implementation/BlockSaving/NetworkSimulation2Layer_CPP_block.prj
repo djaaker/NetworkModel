@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.coder" plugin-version="R2024a">
-  <configuration build-checksum="2950996050" file="C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\BlockSaving\NetworkSimulation2Layer_CPP_block.prj" location="C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\BlockSaving" name="NetworkSimulation2Layer_CPP_block" target="target.unifiedcoder" target-name="MATLAB Coder">
+  <configuration build-checksum="2810732129" file="C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\BlockSaving\NetworkSimulation2Layer_CPP_block.prj" location="C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\BlockSaving" name="NetworkSimulation2Layer_CPP_block" target="target.unifiedcoder" target-name="MATLAB Coder">
     <profile key="profile.mex">
       <param.BuiltInstrumentedMex>false</param.BuiltInstrumentedMex>
       <param.RanInstrumentedMex>false</param.RanInstrumentedMex>
@@ -72,7 +72,7 @@
       <param.InlineThresholdMax>200</param.InlineThresholdMax>
       <param.InlineStackLimit>1000000</param.InlineStackLimit>
       <param.InlineBetweenUserFunctions>option.InlineBetweenUserFunctions.Speed</param.InlineBetweenUserFunctions>
-      <param.InlineBetweenUserAndMathWorksFunctions>option.InlineBetweenUserAndMathWorksFunctions.Speed</param.InlineBetweenUserAndMathWorksFunctions>
+      <param.InlineBetweenUserAndMathWorksFunctions>option.InlineBetweenUserAndMathWorksFunctions.Readability</param.InlineBetweenUserAndMathWorksFunctions>
       <param.InlineBetweenMathWorksFunctions>option.InlineBetweenMathWorksFunctions.Speed</param.InlineBetweenMathWorksFunctions>
       <param.EnableMemcpy>true</param.EnableMemcpy>
       <param.MemcpyThreshold>64</param.MemcpyThreshold>
@@ -193,10 +193,10 @@
       <param.InstructionSetExtensions>Auto</param.InstructionSetExtensions>
       <param.InstructionSetExtensionsConfig.FMA>false</param.InstructionSetExtensionsConfig.FMA>
       <param.SaturateOnIntegerOverflow>true</param.SaturateOnIntegerOverflow>
-      <param.PurelyIntegerCode />
-      <param.SupportNonFinite />
-      <param.LoopUnrollThreshold />
-      <param.PreserveInputData />
+      <param.PurelyIntegerCode>false</param.PurelyIntegerCode>
+      <param.SupportNonFinite>true</param.SupportNonFinite>
+      <param.LoopUnrollThreshold>5</param.LoopUnrollThreshold>
+      <param.PreserveInputData>false</param.PreserveInputData>
       <param.EnableAutoParallelization>false</param.EnableAutoParallelization>
       <param.NumberOfCpuThreads>0</param.NumberOfCpuThreads>
       <param.OptimizeReductions>false</param.OptimizeReductions>
@@ -210,28 +210,28 @@
       <param.HighlightPotentialRowMajorIssues>true</param.HighlightPotentialRowMajorIssues>
       <param.PreserveArrayDimensions>false</param.PreserveArrayDimensions>
       <param.StackUsageMax>200000</param.StackUsageMax>
-      <param.MultiInstanceCode />
-      <param.PreserveUnusedStructFields />
+      <param.MultiInstanceCode>false</param.MultiInstanceCode>
+      <param.PreserveUnusedStructFields>false</param.PreserveUnusedStructFields>
       <param.FilePartitionMethod>option.FilePartitionMethod.MapMFileToCFile</param.FilePartitionMethod>
       <param.LargeConstantGeneration>option.LargeConstantGeneration.WriteOnlyDNNConstantsToDataFiles</param.LargeConstantGeneration>
       <param.LargeConstantThreshold>131072</param.LargeConstantThreshold>
       <param.GenerateComments>true</param.GenerateComments>
-      <param.CommentStyle />
+      <param.CommentStyle>option.CommentStyle.Auto</param.CommentStyle>
       <param.MATLABSourceComments>false</param.MATLABSourceComments>
       <param.MATLABSourceCommentLineNumbers>true</param.MATLABSourceCommentLineNumbers>
-      <param.MATLABFcnDesc />
-      <param.ReqsInCode />
-      <param.ConvertIfToSwitch />
-      <param.PreserveExternInFcnDecls />
-      <param.EnableSignedLeftShifts />
-      <param.EnableSignedRightShifts />
-      <param.ParenthesesLevel />
-      <param.MaxIdLength />
-      <param.HeaderGuardStyle />
+      <param.MATLABFcnDesc>true</param.MATLABFcnDesc>
+      <param.ReqsInCode>false</param.ReqsInCode>
+      <param.ConvertIfToSwitch>false</param.ConvertIfToSwitch>
+      <param.PreserveExternInFcnDecls>true</param.PreserveExternInFcnDecls>
+      <param.EnableSignedLeftShifts>true</param.EnableSignedLeftShifts>
+      <param.EnableSignedRightShifts>true</param.EnableSignedRightShifts>
+      <param.ParenthesesLevel>option.ParenthesesLevel.Nominal</param.ParenthesesLevel>
+      <param.MaxIdLength>31</param.MaxIdLength>
+      <param.HeaderGuardStyle>option.HeaderGuardStyle.UseIncludeGuard</param.HeaderGuardStyle>
       <param.CodeFormattingTool>option.CodeFormattingTool.Auto</param.CodeFormattingTool>
-      <param.ClangFormatFile />
-      <param.DataTypeReplacement />
-      <param.EnableCustomReplacementTypes />
+      <param.ClangFormatFile>option.ClangFormatFile.Generate</param.ClangFormatFile>
+      <param.DataTypeReplacement>option.DataTypeReplacement.CBuiltIn</param.DataTypeReplacement>
+      <param.EnableCustomReplacementTypes>false</param.EnableCustomReplacementTypes>
       <param.ReplacementTypes.double />
       <param.ReplacementTypes.single />
       <param.ReplacementTypes.uint8 />
@@ -244,11 +244,11 @@
       <param.ReplacementTypes.int64 />
       <param.ReplacementTypes.char />
       <param.ReplacementTypes.logical />
-      <param.ReplacementTypes.ImportCustomTypes />
+      <param.ReplacementTypes.ImportCustomTypes>false</param.ReplacementTypes.ImportCustomTypes>
       <param.ReplacementTypes.HeaderFiles />
       <param.CppInterfaceStyle>option.CppInterfaceStyle.Functions</param.CppInterfaceStyle>
       <param.CppInterfaceClassName />
-      <param.CustomFileNameStr />
+      <param.CustomFileNameStr>$N$M</param.CustomFileNameStr>
       <param.CustomSymbolStrGlobalVar>$M$N</param.CustomSymbolStrGlobalVar>
       <param.CustomSymbolStrType>$M$N</param.CustomSymbolStrType>
       <param.CustomSymbolStrField>$M$N</param.CustomSymbolStrField>
@@ -256,30 +256,30 @@
       <param.CustomSymbolStrTmpVar>$M$N</param.CustomSymbolStrTmpVar>
       <param.CustomSymbolStrMacro>$M$N</param.CustomSymbolStrMacro>
       <param.CustomSymbolStrEMXArray>emxArray_$M$N</param.CustomSymbolStrEMXArray>
-      <param.CustomSymbolStrEMXArrayFcn />
+      <param.CustomSymbolStrEMXArrayFcn>emx$M$N</param.CustomSymbolStrEMXArrayFcn>
       <param.ReservedNameArray />
       <param.CppStyleConst>true</param.CppStyleConst>
       <param.RuntimeChecks>false</param.RuntimeChecks>
-      <param.Verbose />
+      <param.Verbose>false</param.Verbose>
       <param.Verbosity>option.Verbosity.Info</param.Verbosity>
       <param.ReportPotentialDifferences>false</param.ReportPotentialDifferences>
       <param.GenerateReport>true</param.GenerateReport>
-      <param.GenerateCodeMetricsReport />
-      <param.GenerateCodeReplacementReport />
-      <param.HighlightPotentialDataTypeIssues />
+      <param.GenerateCodeMetricsReport>false</param.GenerateCodeMetricsReport>
+      <param.GenerateCodeReplacementReport>false</param.GenerateCodeReplacementReport>
+      <param.HighlightPotentialDataTypeIssues>false</param.HighlightPotentialDataTypeIssues>
       <param.HighlightImplicitExpansionIssues>true</param.HighlightImplicitExpansionIssues>
       <param.HighlightLoopControlIssues>true</param.HighlightLoopControlIssues>
       <param.LaunchReport>false</param.LaunchReport>
       <param.ReportInfoVarName />
-      <param.SILPILDebugging />
-      <param.SILPILCheckConstantInputs />
-      <param.SILPILSyncGlobalData />
-      <param.CodeExecutionProfiling />
-      <param.CodeProfilingInstrumentation />
-      <param.CodeProfilingSaveOptions />
-      <param.CodeStackProfiling />
-      <param.EnableInstrumentCode />
-      <param.CodeCoverage />
+      <param.SILPILDebugging>false</param.SILPILDebugging>
+      <param.SILPILCheckConstantInputs>true</param.SILPILCheckConstantInputs>
+      <param.SILPILSyncGlobalData>true</param.SILPILSyncGlobalData>
+      <param.CodeExecutionProfiling>false</param.CodeExecutionProfiling>
+      <param.CodeProfilingInstrumentation>false</param.CodeProfilingInstrumentation>
+      <param.CodeProfilingSaveOptions>option.CodeProfilingSaveOptions.AllData</param.CodeProfilingSaveOptions>
+      <param.CodeStackProfiling>false</param.CodeStackProfiling>
+      <param.EnableInstrumentCode>false</param.EnableInstrumentCode>
+      <param.CodeCoverage>false</param.CodeCoverage>
       <param.DefaultTestFile />
       <param.MergeInstrumentationResults>false</param.MergeInstrumentationResults>
       <param.RanPilSilVerification>false</param.RanPilSilVerification>
@@ -293,21 +293,21 @@
       <param.CustomSource />
       <param.CustomLibrary />
       <param.PostCodeGenCommand />
-      <param.TargetLangStandard />
-      <param.CodeReplacementLibrary />
-      <param.DeprecatedCRLFlag />
+      <param.TargetLangStandard>Auto</param.TargetLangStandard>
+      <param.CodeReplacementLibrary>None</param.CodeReplacementLibrary>
+      <param.DeprecatedCRLFlag>false</param.DeprecatedCRLFlag>
       <param.SameHardware>true</param.SameHardware>
       <param.Toolchain>Automatically locate an installed toolchain</param.Toolchain>
-      <param.BuildConfiguration />
+      <param.BuildConfiguration>Faster Runs</param.BuildConfiguration>
       <param.CustomToolchainOptions />
-      <var.ToolchainSettingsVisible />
-      <var.ToolchainSupportsBuildConfigurations />
+      <var.ToolchainSettingsVisible>true</var.ToolchainSettingsVisible>
+      <var.ToolchainSupportsBuildConfigurations>true</var.ToolchainSupportsBuildConfigurations>
       <param.target.Data>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;ctdata&gt;&lt;configuredHardware/&gt;&lt;/ctdata&gt;</param.target.Data>
       <param.target.ActiveType>option.target.TargetType.MatlabHost</param.target.ActiveType>
       <param.target.ActiveTarget />
       <param.HardwareVendor.Production>Generic</param.HardwareVendor.Production>
       <param.HardwareType.Production>MATLAB Host Computer</param.HardwareType.Production>
-      <param.HWDeviceType.Production />
+      <param.HWDeviceType.Production>Generic-&gt;MATLAB Host Computer</param.HWDeviceType.Production>
       <var.instance.enabled.Production>true</var.instance.enabled.Production>
       <param.HardwareSizeChar.Production>8</param.HardwareSizeChar.Production>
       <param.HardwareSizeShort.Production>16</param.HardwareSizeShort.Production>
@@ -328,7 +328,7 @@
       <param.HardwareDivisionRounding.Production>option.HardwareDivisionRounding.Zero</param.HardwareDivisionRounding.Production>
       <param.HardwareVendor.Target>Generic</param.HardwareVendor.Target>
       <param.HardwareType.Target>MATLAB Host Computer</param.HardwareType.Target>
-      <param.HWDeviceType.Target />
+      <param.HWDeviceType.Target>Generic-&gt;MATLAB Host Computer</param.HWDeviceType.Target>
       <var.instance.enabled.Target>false</var.instance.enabled.Target>
       <param.HardwareSizeChar.Target>8</param.HardwareSizeChar.Target>
       <param.HardwareSizeShort.Target>16</param.HardwareSizeShort.Target>
@@ -348,60 +348,60 @@
       <param.HardwareAtomicFloatSize.Target>option.HardwareAtomicFloatSize.None</param.HardwareAtomicFloatSize.Target>
       <param.HardwareDivisionRounding.Target>option.HardwareDivisionRounding.Zero</param.HardwareDivisionRounding.Target>
       <var.SuppressHardwareChange>false</var.SuppressHardwareChange>
-      <param.CastingMode />
-      <param.IndentStyle />
-      <param.IndentSize />
-      <param.ColumnLimit />
-      <param.grt.GenCodeOnly>false</param.grt.GenCodeOnly>
+      <param.CastingMode>option.CastingMode.Nominal</param.CastingMode>
+      <param.IndentStyle>option.IndentStyle.K&amp;R</param.IndentStyle>
+      <param.IndentSize>2</param.IndentSize>
+      <param.ColumnLimit>80</param.ColumnLimit>
+      <param.grt.GenCodeOnly>true</param.grt.GenCodeOnly>
       <param.ConstantFoldingTimeout>40000</param.ConstantFoldingTimeout>
       <param.CompileTimeRecursionLimit>50</param.CompileTimeRecursionLimit>
       <param.EnableRuntimeRecursion>true</param.EnableRuntimeRecursion>
-      <param.RunInitializeFcn />
-      <param.IncludeInitializeFcn />
-      <param.IncludeTerminateFcn />
+      <param.RunInitializeFcn>true</param.RunInitializeFcn>
+      <param.IncludeInitializeFcn>true</param.IncludeInitializeFcn>
+      <param.IncludeTerminateFcn>true</param.IncludeTerminateFcn>
       <param.GenerateExampleMain>option.GenerateExampleMain.GenerateCodeOnly</param.GenerateExampleMain>
       <param.PreserveVariableNames>option.PreserveVariableNames.None</param.PreserveVariableNames>
-      <param.GenerateMakefile />
-      <param.BuildToolEnable />
+      <param.GenerateMakefile>true</param.GenerateMakefile>
+      <param.BuildToolEnable>false</param.BuildToolEnable>
       <param.BuildToolConfiguration />
       <param.InlineThreshold>10</param.InlineThreshold>
       <param.InlineThresholdMax>200</param.InlineThresholdMax>
       <param.InlineStackLimit>1000000</param.InlineStackLimit>
       <param.InlineBetweenUserFunctions>option.InlineBetweenUserFunctions.Speed</param.InlineBetweenUserFunctions>
-      <param.InlineBetweenUserAndMathWorksFunctions>option.InlineBetweenUserAndMathWorksFunctions.Speed</param.InlineBetweenUserAndMathWorksFunctions>
+      <param.InlineBetweenUserAndMathWorksFunctions>option.InlineBetweenUserAndMathWorksFunctions.Readability</param.InlineBetweenUserAndMathWorksFunctions>
       <param.InlineBetweenMathWorksFunctions>option.InlineBetweenMathWorksFunctions.Speed</param.InlineBetweenMathWorksFunctions>
-      <param.EnableStrengthReduction />
+      <param.EnableStrengthReduction>false</param.EnableStrengthReduction>
       <param.EnableMemcpy>true</param.EnableMemcpy>
       <param.MemcpyThreshold>64</param.MemcpyThreshold>
       <param.EnableOpenMP>true</param.EnableOpenMP>
       <param.InitFltsAndDblsToZero>true</param.InitFltsAndDblsToZero>
       <param.DefaultVariableInitialization>option.DefaultVariableInitialization.None</param.DefaultVariableInitialization>
-      <param.GenerateNonFiniteFilesIfUsed />
-      <param.PassStructByReference />
-      <param.UseBuiltinFFTWLibrary />
+      <param.GenerateNonFiniteFilesIfUsed>true</param.GenerateNonFiniteFilesIfUsed>
+      <param.PassStructByReference>true</param.PassStructByReference>
+      <param.UseBuiltinFFTWLibrary>false</param.UseBuiltinFFTWLibrary>
       <param.CustomFFTCallback />
       <param.CustomBLASCallback />
       <param.CustomLAPACKCallback />
       <param.UsePrecompiledLibraries>option.UsePrecompiledLibraries.Prefer</param.UsePrecompiledLibraries>
       <param.EnableAutoParallelizationReporting>true</param.EnableAutoParallelizationReporting>
       <param.CacheDynamicArrayDataPointer>true</param.CacheDynamicArrayDataPointer>
-      <param.GenerateDefaultInSwitch />
-      <param.JustifyMISRAViolations />
-      <param.EnableTraceability />
-      <param.SILPILVerbosity />
-      <param.CodeProfilingCodeMetrics />
+      <param.GenerateDefaultInSwitch>false</param.GenerateDefaultInSwitch>
+      <param.JustifyMISRAViolations>false</param.JustifyMISRAViolations>
+      <param.EnableTraceability>true</param.EnableTraceability>
+      <param.SILPILVerbosity>option.SILPILVerbosity.off</param.SILPILVerbosity>
+      <param.CodeProfilingCodeMetrics>option.CodeProfilingCodeMetrics.Time</param.CodeProfilingCodeMetrics>
       <param.UseECoderFeatures>true</param.UseECoderFeatures>
       <param.EnableGitSupport>false</param.EnableGitSupport>
       <param.EnableAutoCommit>true</param.EnableAutoCommit>
       <param.RepositoryStyle>option.RepositoryStyle.Auto</param.RepositoryStyle>
-      <param.psCustomPrjState />
+      <param.psCustomPrjState>false</param.psCustomPrjState>
       <param.psCustomProjectFile />
-      <param.psCheckConfValue />
-      <param.psUniqueOutPutState />
-      <param.psOpenResultsState />
-      <param.psProductModeValue />
-      <param.psQuickConfValue />
-      <param.psOutputFolder />
+      <param.psCheckConfValue>option.psCheckConfValue.onWarnCheckConfDlg</param.psCheckConfValue>
+      <param.psUniqueOutPutState>true</param.psUniqueOutPutState>
+      <param.psOpenResultsState>true</param.psOpenResultsState>
+      <param.psProductModeValue>option.psProductModeValue.codeProver</param.psProductModeValue>
+      <param.psQuickConfValue>option.psQuickConfValue.proj</param.psQuickConfValue>
+      <param.psOutputFolder>results_$codegenName$</param.psOutputFolder>
       <unset>
         <param.WorkingFolder />
         <param.SpecifiedWorkingFolder />
@@ -558,7 +558,6 @@
         <param.IndentStyle />
         <param.IndentSize />
         <param.ColumnLimit />
-        <param.grt.GenCodeOnly />
         <param.ConstantFoldingTimeout />
         <param.CompileTimeRecursionLimit />
         <param.EnableRuntimeRecursion />
@@ -617,7 +616,7 @@
     </param.TestSnippets>
     <param.ExternalFcnMajority>column</param.ExternalFcnMajority>
     <param.UseGlobals>option.UseGlobals.No</param.UseGlobals>
-    <param.outputfile>${PROJECT_ROOT}\NetworkSimulation2Layer_CPP_block_mex_2.mexw64</param.outputfile>
+    <param.outputfile>${PROJECT_ROOT}\codegen\lib\NetworkSimulation2Layer_CPP_block_mex_c\NetworkSimulation2Layer_CPP_block_mex_c.lib</param.outputfile>
     <param.version>R2012a</param.version>
     <param.HasECoderFeatures>true</param.HasECoderFeatures>
     <param.HasGpuCoder>true</param.HasGpuCoder>
@@ -637,7 +636,7 @@
     <param.AutoInferUnboundedSizeThreshold>2048</param.AutoInferUnboundedSizeThreshold>
     <param.EnableFixedPointStep>false</param.EnableFixedPointStep>
     <param.EnableScreener>true</param.EnableScreener>
-    <param.AnnotationChecksum>2348574717</param.AnnotationChecksum>
+    <param.AnnotationChecksum>969825181</param.AnnotationChecksum>
     <var.LegacyTarget />
     <var.MirrorOnOpen>false</var.MirrorOnOpen>
     <param.FixedPointEnabled>false</param.FixedPointEnabled>
@@ -645,14 +644,14 @@
     <var.DismissScreener>false</var.DismissScreener>
     <param.unifiedParamStorage />
     <param.hdlParamStorage />
-    <var.gc.lastOutputRoot>codegen\mex\NetworkSimulation2Layer_CPP_block</var.gc.lastOutputRoot>
-    <var.gc.lastOutputType>MEX_FILE</var.gc.lastOutputType>
-    <var.gc.preBuildChecksum>2950996050</var.gc.preBuildChecksum>
+    <var.gc.lastOutputRoot>codegen\lib\NetworkSimulation2Layer_CPP_block</var.gc.lastOutputRoot>
+    <var.gc.lastOutputType>C_CODE</var.gc.lastOutputType>
+    <var.gc.preBuildChecksum>2810732129</var.gc.preBuildChecksum>
     <var.cfi.lastOutputRoot>codegen\mex\NetworkSimulation2Layer_CPP_block</var.cfi.lastOutputRoot>
-    <var.cfi.preBuildChecksum>2941790930</var.cfi.preBuildChecksum>
+    <var.cfi.preBuildChecksum>2549651940</var.cfi.preBuildChecksum>
     <var.lastCfiTestSnippet>NetworkSimulationTestbench_block</var.lastCfiTestSnippet>
     <var.outdatedOnRestore>false</var.outdatedOnRestore>
-    <var.lastUserSourceChecksum>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;checksum&gt;&lt;includedFiles&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\BlockSaving\Network2Layer_CPP_block.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\BlockSaving\NetworkSimulation2Layer_CPP_block.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\BlockSaving\Neuron_CPP_block.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\FIFO.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\FIFOSpikes.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\randomSampleFromArray.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\save_logical_matrix_bin.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\save_matrix_bin.m&lt;/file&gt;&lt;/includedFiles&gt;&lt;value&gt;787381342&lt;/value&gt;&lt;/checksum&gt;</var.lastUserSourceChecksum>
+    <var.lastUserSourceChecksum>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;checksum&gt;&lt;includedFiles&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\BlockSaving\Network2Layer_CPP_block.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\BlockSaving\NetworkSimulation2Layer_CPP_block.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\BlockSaving\Neuron_CPP_block.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\FIFO.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\FIFOSpikes.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\randomSampleFromArray.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\save_logical_matrix_bin.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\save_matrix_bin.m&lt;/file&gt;&lt;/includedFiles&gt;&lt;value&gt;398540966&lt;/value&gt;&lt;/checksum&gt;</var.lastUserSourceChecksum>
     <var.sourceSetState>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;sourceModel&gt;&lt;primarySourceFiles&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\BlockSaving\Network2Layer_CPP_block.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\BlockSaving\NetworkSimulation2Layer_CPP_block.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\BlockSaving\Neuron_CPP_block.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\FIFO.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\FIFOSpikes.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\randomSampleFromArray.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\save_logical_matrix_bin.m&lt;/file&gt;&lt;file&gt;C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\Utils\save_matrix_bin.m&lt;/file&gt;&lt;/primarySourceFiles&gt;&lt;fixedPointSourceFiles/&gt;&lt;fixedPointSourceRegistered&gt;false&lt;/fixedPointSourceRegistered&gt;&lt;fixedPointSourceSelected&gt;false&lt;/fixedPointSourceSelected&gt;&lt;/sourceModel&gt;</var.sourceSetState>
     <param.forceMexBuild>false</param.forceMexBuild>
     <param.NoDefaultJIT>false</param.NoDefaultJIT>
@@ -667,10 +666,10 @@
     <param.EnableStructExplosion>true</param.EnableStructExplosion>
     <param.ForceANSIC>false</param.ForceANSIC>
     <param.NumCompileJobs>1</param.NumCompileJobs>
-    <param.mex.outputfile>NetworkSimulation2Layer_CPP_block_mex_2</param.mex.outputfile>
-    <param.grt.outputfile>NetworkSimulation2Layer_CPP_block</param.grt.outputfile>
-    <param.artifact>option.target.artifact.mex</param.artifact>
-    <param.outputfile>${PROJECT_ROOT}\NetworkSimulation2Layer_CPP_block_mex_2.mexw64</param.outputfile>
+    <param.mex.outputfile>NetworkSimulation2Layer_CPP_block_mex</param.mex.outputfile>
+    <param.grt.outputfile>NetworkSimulation2Layer_CPP_block_mex_c</param.grt.outputfile>
+    <param.artifact>option.target.artifact.lib</param.artifact>
+    <param.outputfile>${PROJECT_ROOT}\codegen\lib\NetworkSimulation2Layer_CPP_block_mex_c\NetworkSimulation2Layer_CPP_block_mex_c.lib</param.outputfile>
     <param.CppNamespace />
     <param.CppPreserveNamespaces>true</param.CppPreserveNamespaces>
     <param.CppNamespaceForMathworksCode>coder</param.CppNamespaceForMathworksCode>
@@ -802,8 +801,7 @@
       <param.EnableStructExplosion />
       <param.ForceANSIC />
       <param.NumCompileJobs />
-      <param.grt.outputfile />
-      <param.artifact />
+      <param.mex.outputfile />
       <param.CppNamespace />
       <param.CppPreserveNamespaces />
       <param.CppNamespaceForMathworksCode />
@@ -898,7 +896,7 @@
     </unset>
     <fileset.entrypoints>
       <file custom-data-expanded="false" value="${PROJECT_ROOT}\NetworkSimulation2Layer_CPP_block.m">
-        <Marker>1741269562703</Marker>
+        <Marker>1741880667563</Marker>
       </file>
     </fileset.entrypoints>
     <fileset.testbench>
@@ -920,6 +918,7 @@
           <Input Name="total_time" typeId="0" />
           <Input Name="spike_train_ext" typeId="1" />
           <Input Name="folderpath" typeId="2" />
+          <Input Name="time_to_save" typeId="0" />
           <idpTable>
             <type typeId="0">
               <Class>double</Class>
@@ -932,7 +931,7 @@
             </type>
             <type typeId="1">
               <Class>logical</Class>
-              <Size>:1000000 x :12000</Size>
+              <Size>:200000 x :12000</Size>
               <Value />
               <InitialValue />
               <UserDefined>true</UserDefined>
@@ -950,7 +949,7 @@
       </file>
     </fileset.inputtypes>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}" name="NetworkSimulation2Layer_CPP_block_mex_2.mexw64" optional="false">C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\BlockSaving\NetworkSimulation2Layer_CPP_block_mex_2.mexw64</file>
+      <file location="${PROJECT_ROOT}\codegen\lib\NetworkSimulation2Layer_CPP_block_mex_c" name="NetworkSimulation2Layer_CPP_block_mex_c.lib" optional="false">C:\Users\okolhe\OneDrive - purdue.edu\Academics\Purdue\Analysis\NetworkModel\CPP_Implementation\BlockSaving\codegen\lib\NetworkSimulation2Layer_CPP_block_mex_c\NetworkSimulation2Layer_CPP_block_mex_c.lib</file>
     </build-deliverables>
     <workflow />
     <matlab>

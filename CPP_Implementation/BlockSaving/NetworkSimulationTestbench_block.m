@@ -1,9 +1,9 @@
 %% Network Paramters 
 %Number of neurons in one dimension 
-grid_size = 300;
+grid_size = 100;
 excitatory_ratio = 0.8;
 % Size of the patch of cortex to simulate 
-grid_length = 1.8e-3; % in m
+grid_length = 0.6e-3; % in m
 
 
 %% Connectivity Parameters
@@ -28,7 +28,7 @@ total_time = 1.2;
 saveFlag = 1;
 if saveFlag == 1
     savepath = uigetdir(path);
-    foldername = 'SNN_block_300x300_1200ms_stim';
+    foldername = 'SNN_block_250x250_2000ms_stim';
     sessionName = [savepath,'/',foldername,'/','SNN.mat'];
     folderpath = [savepath, '/' , foldername];
     mkdir(folderpath);
@@ -53,12 +53,13 @@ rate_baseline = 0;
 
 startup_duration = 0.2; 
 baseline_prestim = 0.4;
-stim_duration = 0.025;
+stim_duration = 0.020;
 dt = time_step; 
 spike_train_ext = [generate_poisson_spikes_N(N, rate_startup, startup_duration, dt) generate_poisson_spikes_N(N, rate_baseline, baseline_prestim, dt) generate_poisson_spikes_N(N, rate_stimulation, stim_duration, dt)];% generate_poisson_spikes_N(N, rate_baseline, total_time-startup_duration-baseline_prestim-stim_duration, dt)];
 
 %% Simulation
-[SNN] =  NetworkSimulation2Layer_CPP_block_mex_2(grid_size,excitatory_ratio,grid_length,sigma,vAP,tau_syn,kden,GE,GI,time_step,total_time,spike_train_ext,folderpath);
+time_to_save = 0.1;
+[SNN] =  NetworkSimulation2Layer_CPP_block(grid_size,excitatory_ratio,grid_length,sigma,vAP,tau_syn,kden,GE,GI,time_step,total_time,spike_train_ext,folderpath,time_to_save);
 
 %% Saving workspace
 save(sessionName,"-v7.3");

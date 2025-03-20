@@ -1,4 +1,4 @@
-function [SNN] =  NetworkSimulation2Layer_CPP_block(grid_size,excitatory_ratio,grid_length,sigma,vAP,tau_syn,kden,GE,GI,time_step,total_time,spike_train_ext,folderpath)
+function [SNN] =  NetworkSimulation2Layer_CPP_block(grid_size,excitatory_ratio,grid_length,sigma,vAP,tau_syn,kden,GE,GI,time_step,total_time,spike_train_ext,folderpath,time_to_save)
     %#codegen
     % n_time = round(total_time/time_step);
     % Create spiking neural network SNN 
@@ -14,7 +14,7 @@ function [SNN] =  NetworkSimulation2Layer_CPP_block(grid_size,excitatory_ratio,g
 
 
     
-    time_block = 0.1/time_step; % the number of elements in each time block;
+    time_block = time_to_save/time_step; % the number of elements in each time block;
     
     % Initializing the network
     disp('Creating a SNN ...');
@@ -82,11 +82,13 @@ function [SNN] =  NetworkSimulation2Layer_CPP_block(grid_size,excitatory_ratio,g
             disp('Done saving. Cleared buffers.');
         end
 
-        if (i==total_iterations && spikes.head ~= spikes.tail) % Last iterration and the buffer has some elements 
+        if (i==total_iterations) % Last iterration and the buffer has some elements 
+            disp('Last iterration. Saving buffers.');
             save_logical_matrix_bin(spikes_binfile, spikes.buffer, 'a');
             save_matrix_bin(v_neurons_binfile,v_neurons.buffer,'a');
             save_matrix_bin(ge_neurons_binfile,ge_neurons.buffer,'a');
             save_matrix_bin(gi_neurons_binfile,gi_neurons.buffer,'a');
+            disp('Done.');
         end
        
         % Calculate elapsed time and estimate time remaining

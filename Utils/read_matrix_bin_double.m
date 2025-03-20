@@ -1,4 +1,4 @@
-function matrix = read_matrix_bin(filename)
+function matrix = read_matrix_bin_double(filename)
 %#codegen
     % READ_MATRIX_BIN Reads a 2D int64 matrix from a binary file.
     % 
@@ -28,6 +28,6 @@ function matrix = read_matrix_bin(filename)
     if fid == -1
         error('Cannot open binary file for reading.');
     end
-    matrix = fread(fid, [numRows, numCols], 'single'); % Read as float64
+    matrix = fread(fid, [numRows, numCols], 'double'); % Read as float64
     fclose(fid);
 end

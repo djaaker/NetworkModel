@@ -1,6 +1,6 @@
-function [fig] = plotSpikingNetwork(SNN)
+function [fig] = plotSpikingNetwork(SNN,spikes,ge_neurons,gi_neurons)
     % Extract spike data
-    spike_matrix = SNN.spikes;  % Binary matrix of spikes (neurons x time)
+    spike_matrix = spikes;  % Binary matrix of spikes (neurons x time)
     EI_tag = SNN.EI_tag;        % 0 for excitatory, 1 for inhibitory
     dt = SNN.dt;                % Time step of simulation
     time_vector = (1:size(spike_matrix, 2)) * dt; % Time in seconds
@@ -25,8 +25,8 @@ function [fig] = plotSpikingNetwork(SNN)
     mean_firing_rate = mean(firing_rates, 1); % Average across neurons
 
 
-    mean_ge = mean(SNN.ge_neurons, 1);
-    mean_gi = mean(SNN.gi_neurons, 1);
+    mean_ge = mean(ge_neurons, 1);
+    mean_gi = mean(gi_neurons, 1);
 
     % Create figure with subplots
     fig = figure;
@@ -57,4 +57,5 @@ function [fig] = plotSpikingNetwork(SNN)
 
     % Link x-axes
     linkaxes(findobj(gcf, 'Type', 'axes'), 'x');
+    
 end

@@ -1,30 +1,62 @@
+format compact;
+% set(0,'DefaultFigureWindowStyle','normal')
+addpath(genpath('Utils'));
+addpath(genpath('Wave'));
+addpath(genpath('Dependancies'));
+addpath(genpath('CPP_Implementation'));
+
 %% Get directory to save the plots and videos
 % Prompt user to select a directory
 save_dir = uigetdir('', 'Select Directory to save plots and videos');
-folderpath = [save_dir, '/' , 'Plots'];
-mkdir(folderpath);
+folderpath1 = [save_dir, '/' , 'Plots'];
+mkdir(folderpath1);
+
+%% Loading saved files
+spikes_binfile = [save_dir,'/','spikes'];
+v_neurons_binfile = [save_dir,'/','v_neurons'];
+gi_neurons_binfile = [save_dir,'/','gi_neurons'];
+ge_neurons_binfile = [save_dir,'/','ge_neurons'];
+snn_matfile = [save_dir,'/','SNN.mat'];
+
+spikes = read_logical_matrix_bin(spikes_binfile);
+v_neurons = read_matrix_bin(v_neurons_binfile);
+ge_neurons = read_matrix_bin(ge_neurons_binfile);
+gi_neurons = read_matrix_bin(gi_neurons_binfile);
+
+v_neurons = single(v_neurons);
+ge_neurons = single(ge_neurons);
+gi_neurons = single(gi_neurons);
+load (snn_matfile);
+
+%% 
+spikes = spikes(:,1:round(total_time/dt));
+v_neurons = v_neurons(:,1:round(total_time/dt));
+ge_neurons = ge_neurons(:,1:round(total_time/dt));
+gi_neurons = gi_neurons(:,1:round(total_time/dt));
 
 %% Plot network properties
-fig(1) = plotNetworkProperties(25000,SNN);
-savefig(fig(1),[folderpath,'/','networkConnections.fig']);
+fig(1) = plotNetworkProperties(35000,SNN,spikes);
+savefig(fig(1),[folderpath1,'/','networkConnections.fig']);
+
 %% Plotting and generating video for spiking activity
-plot_spiking_activity_video(SNN,dt,1,filename);
+filename = [folderpath1, '/', 'spiking.avi'];
+plot_spiking_activity_video(SNN,spikes,dt,1,filename);
 
 %% PLotting single neuron dynamics
-fig(2) = plotSingleNeuronDynamics(25000,SNN);
-savefig(fig(2),[folderpath,'/','singleNeuronDynamic.fig']);
+fig(2) = plotSingleNeuronDynamics(35000,SNN,spikes,v_neurons,ge_neurons,gi_neurons);
+savefig(fig(2),[folderpath1,'/','singleNeuronDynamic.fig']);
 
 %% Generating LFP
-LFP = calculateLFP(SNN);
+LFP = calculateLFP(SNN,v_neurons,ge_neurons,gi_neurons);
 
 % Plotting LFP, spikes and input 
-fig(3) = plotLFP(LFP,SNN,spike_train_ext);
-savefig(fig(3),[folderpath,'/','LFP_Spikes.fig']);
+fig(3) = plotLFP(LFP,SNN,spikes,spike_train_ext);
+savefig(fig(3),[folderpath1,'/','LFP_Spikes.fig']);
 
 % Genreating a video of the LFP
-lfpfilename = [folderpath,'/','LFP_block.avi'];
+lfpfilename = [folderpath1,'/','LFP_block.avi'];
 generateLFPVideo(LFP.LFP_downsampled, 1/LFP.target_sampling_freq, lfpfilename);
-lfpfilename = [folderpath,'/','LFP_gauss.avi'];
+lfpfilename = [folderpath1,'/','LFP_gauss.avi'];
 generateLFPVideo(LFP.LFP_gaussian_downsampled, 1/LFP.target_sampling_freq, lfpfilename);
 
 %% Wave detection
@@ -39,10 +71,10 @@ LFP.xf = bandpass_filter(LFP.LFP_gaussian_downsampled,filterLP1,filterLP2,filter
 parameters.rows = LFP.N_blocks_combined;parameters.cols = LFP.N_blocks_combined;
 [parameters.X,parameters.Y] = meshgrid( 1:parameters.cols, 1:parameters.rows );
 SNN.grid_length = grid_length;
-parameters.xspacing = LFP.lfp_patch_size*(SNN.grid_length/SNN.grid_size_e) ;parameters.yspacing = LFP.lfp_patch_size*(SNN.grid_length/SNN.grid_size_e);
+parameters.xspacing = LFP.lfp_patch_size*(SNN.grid_length/SNN.grid_size_e)*1e3 ;parameters.yspacing = LFP.lfp_patch_size*(SNN.grid_length/SNN.grid_size_e)*1e3; % in mm need to change 
 parameters.rhoThres= 0.5;
-% Wave detection
 
+% Wave detection
 allwaves.LFPIndex = (1:1:size(LFP.LFP_combined,3))';
 xf{1,1} = LFP.xf;
 xgp{1,1} = LFP.xgp;
@@ -50,8 +82,8 @@ wt{1,1} = LFP.wt;
 Wavesall = detectWaves(xf,xgp,wt,allwaves,parameters,parameters.rhoThres);
 
 %% Plotting
-fig(4) = plotSpikingNetwork(SNN);
-
+fig(4) = plotSpikingNetwork(SNN,spikes,ge_neurons,gi_neurons);
+savefig(fig(4),[folderpath1,'/','spikingActivity.fig']);
 
 %%
 
@@ -62,20 +94,20 @@ fig(4) = plotSpikingNetwork(SNN);
 % 
 figure();
 subplot(4,1,1)
-imagesc(SNN.v_neurons);
+imagesc(v_neurons);
 subplot(4,1,2)
-imagesc(SNN.ge_neurons);
+imagesc(ge_neurons);
 subplot(4,1,3)
-imagesc(SNN.gi_neurons);
+imagesc(gi_neurons);
 subplot(4,1,4)
-imagesc(SNN.spikes);
+imagesc(spikes);
 colormap(flipud(gray))
 
-% %% 
-% figure();
-% imagesc(SNN.spikes);
-% colormap(flipud(gray))
 % 
+figure();
+imagesc(spikes);
+colormap(flipud(gray))
+
 % 
 figure();
 imagesc(spike_train_ext);

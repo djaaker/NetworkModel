@@ -11,10 +11,10 @@ classdef Network2Layer_CPP_block
         K_i                     % Number of excitatory synapses per neuron
         neurons                 % Array of all neurons in the network
         dt                      % Time step of the simulation
-        spikes                  % matrix storing all the spikes
-        v_neurons               % matrix storing all the v of neurons
-        ge_neurons              % matrix storing all the ge of neurons
-        gi_neurons              % matrix storing all the gi of neurons
+%         spikes                  % matrix storing all the spikes
+%         v_neurons               % matrix storing all the v of neurons
+%         ge_neurons              % matrix storing all the ge of neurons
+%         gi_neurons              % matrix storing all the gi of neurons
         total_time              % total time of the simulation
         EI_tag                  % EI tag of all neurons
     end
@@ -218,7 +218,7 @@ classdef Network2Layer_CPP_block
             end
         
             % Serial update of spikes in all neurons 
-            for i = 1:num_neurons_tmp
+            for i = 1:num_neurons_tmp   
                 neuron_data{i} = neuron_data{i}.update_spikes_buff(spikes_tmp);
             end
 

@@ -20,7 +20,7 @@ function save_matrix_bin(filename, matrix, mode)
         if fid == -1
             error('Cannot open binary file for writing.');
         end
-        fwrite(fid, matrix, 'double'); % Store as int64
+        fwrite(fid, matrix, 'single'); % Store as int64
         fclose(fid);
         
         % Save dimensions separately as int64
@@ -55,7 +55,7 @@ function save_matrix_bin(filename, matrix, mode)
         if fid == -1
             error('Cannot open binary file for appending.');
         end
-        fwrite(fid, matrix, 'double'); % Append in int64 format
+        fwrite(fid, matrix, 'single'); % Append in int64 format
         fclose(fid);
         
         % Update the metadata file with the new column count

@@ -1,4 +1,4 @@
-function [fig] = plotLFP(LFP,SNN,spike_train_ext)
+function [fig] = plotLFP(LFP,SNN,spikes,spike_train_ext)
     
     LPF_stack = reshape(LFP.LFP_downsampled,LFP.N_blocks_combined^2,[]);
     
@@ -80,25 +80,25 @@ function [fig] = plotLFP(LFP,SNN,spike_train_ext)
     ylabel('Mean firing rate (Hz)');
     
     ax4 = subplot(n_plots,1,4);
-    time_spikes = 0:SNN.dt:(size(SNN.spikes,2)-1)*SNN.dt;
-    imagesc(time_spikes,1:SNN.N_E,SNN.spikes(1:SNN.N_E,:));
+    time_spikes = 0:SNN.dt:(size(spikes,2)-1)*SNN.dt;
+    imagesc(time_spikes,1:SNN.N_E,spikes(1:SNN.N_E,:));
     colormap(flipud(gray));xlabel('Time (s)');ylabel('Neurons');
     title('Spiking rater of the excitatory network');
     yyaxis right;
     % FR_binsize = 10e-3;
-    firingRates_input = estimateFiringRate(SNN.spikes(1:SNN.N_E,:),FR_binsize,1/SNN.dt);
+    firingRates_input = estimateFiringRate(spikes(1:SNN.N_E,:),FR_binsize,1/SNN.dt);
     time_firing_rate = FR_binsize/2:FR_binsize:FR_binsize/2+(size(firingRates_input,2)-1)*FR_binsize;
     plot(time_firing_rate,mean(firingRates_input,1),'LineWidth',2,'Color',[1 0 0]);
     ylabel('Mean firing rate (Hz)'); ylim([0 50]);
     
     ax5 = subplot(n_plots,1,5);
-    time_spikes = 0:SNN.dt:(size(SNN.spikes,2)-1)*SNN.dt;
-    imagesc(time_spikes,1:SNN.N_I,SNN.spikes(SNN.N_E+1:end,:));
+    time_spikes = 0:SNN.dt:(size(spikes,2)-1)*SNN.dt;
+    imagesc(time_spikes,1:SNN.N_I,spikes(SNN.N_E+1:end,:));
     colormap(flipud(gray));xlabel('Time (s)');ylabel('Neurons');
     title('Spiking rater of the inhibitory network');
     yyaxis right;
     % FR_binsize = 10e-3;
-    firingRates_input = estimateFiringRate(SNN.spikes(SNN.N_E+1:end,:),FR_binsize,1/SNN.dt);
+    firingRates_input = estimateFiringRate(spikes(SNN.N_E+1:end,:),FR_binsize,1/SNN.dt);
     time_firing_rate = FR_binsize/2:FR_binsize:FR_binsize/2+(size(firingRates_input,2)-1)*FR_binsize;
     plot(time_firing_rate,mean(firingRates_input,1),'LineWidth',2,'Color',[1 0 0]);
     ylabel('Mean firing rate (Hz)');ylim([0 50]);
